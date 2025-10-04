@@ -36,11 +36,13 @@ export default function ElanlarPage() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="bg-white py-16">
+      <section className="bg-white py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Elanlar</h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">
+              Elanlar
+            </h1>
+            <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto px-4">
               Karyera və Məzunlarla İş Mərkəzinin ən son elanları və xəbərləri
             </p>
           </div>
@@ -48,29 +50,31 @@ export default function ElanlarPage() {
       </section>
 
       {/* Elanlar Siyahısı */}
-      <section className="py-16">
+      <section className="py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             {elanlar.map((elan, index) => (
               <div
                 key={index}
-                className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6"
+                className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-4 sm:p-6"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <div className="flex items-center space-x-4 mb-3">
-                      <span className="bg-sdu-blue text-white px-3 py-1 rounded-full text-sm font-medium">
+                    <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 mb-3">
+                      <span className="bg-sdu-blue text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium w-fit">
                         {elan.category}
                       </span>
-                      <span className="text-gray-500 text-sm">
+                      <span className="text-gray-500 text-xs sm:text-sm">
                         {new Date(elan.date).toLocaleDateString("az-AZ")}
                       </span>
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                    <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3 leading-tight">
                       {elan.title}
                     </h3>
-                    <p className="text-gray-600 mb-4">{elan.description}</p>
-                    <button className="text-sdu-blue hover:text-blue-700 font-medium">
+                    <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base leading-relaxed">
+                      {elan.description}
+                    </p>
+                    <button className="text-sdu-blue hover:text-blue-700 font-medium text-sm sm:text-base">
                       Ətraflı oxu →
                     </button>
                   </div>
@@ -82,32 +86,40 @@ export default function ElanlarPage() {
       </section>
 
       {/* Əlavə Məlumat */}
-      <section className="bg-sdu-light-blue py-16">
+      <section className="bg-sdu-light-blue py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-          <h2 className="text-3xl font-bold mb-6">Elanlar Haqqında</h2>
-          <p className="text-xl mb-8 max-w-4xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">
+            Elanlar Haqqında
+          </h2>
+          <p className="text-base sm:text-lg lg:text-xl mb-6 sm:mb-8 max-w-4xl mx-auto px-4">
             Karyera və Məzunlarla İş Mərkəzi müntəzəm olaraq tələbələr və
             məzunlar üçün vacib elanlar və xəbərlər yayımlayır. Bu elanlar
             təcrübə imkanları, karyera günləri, təlimlər və digər fəaliyyətlər
             haqqında məlumat verir.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-            <div className="bg-white bg-opacity-10 rounded-lg p-6">
-              <h3 className="text-xl font-semibold mb-4">Təcrübə Elanları</h3>
-              <p className="text-blue-100">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mt-8 sm:mt-12">
+            <div className="bg-white bg-opacity-10 rounded-lg p-4 sm:p-6">
+              <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
+                Təcrübə Elanları
+              </h3>
+              <p className="text-blue-100 text-sm sm:text-base">
                 Müxtəlif sahələrdə təcrübə imkanları və istehsalat təcrübəsi
                 elanları
               </p>
             </div>
-            <div className="bg-white bg-opacity-10 rounded-lg p-6">
-              <h3 className="text-xl font-semibold mb-4">Karyera Tədbirləri</h3>
-              <p className="text-blue-100">
+            <div className="bg-white bg-opacity-10 rounded-lg p-4 sm:p-6">
+              <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
+                Karyera Tədbirləri
+              </h3>
+              <p className="text-blue-100 text-sm sm:text-base">
                 Karyera günləri, seminarlar və peşəkar inkişaf tədbirləri
               </p>
             </div>
-            <div className="bg-white bg-opacity-10 rounded-lg p-6">
-              <h3 className="text-xl font-semibold mb-4">Vakansiyalar</h3>
-              <p className="text-blue-100">
+            <div className="bg-white bg-opacity-10 rounded-lg p-4 sm:p-6">
+              <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
+                Vakansiyalar
+              </h3>
+              <p className="text-blue-100 text-sm sm:text-base">
                 Yerli və beynəlxalq şirkətlərdə iş imkanları və vakansiyalar
               </p>
             </div>
@@ -119,4 +131,3 @@ export default function ElanlarPage() {
     </main>
   );
 }
-

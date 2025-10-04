@@ -9,13 +9,13 @@ export default function ElaqePage() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="bg-white py-16">
+      <section className="bg-white py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">
               Bizimlə Əlaqə
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto px-4">
               Karyera və Məzunlarla İş Mərkəzi ilə əlaqə qurmaq üçün bizə
               müraciət edin
             </p>
@@ -24,19 +24,19 @@ export default function ElaqePage() {
       </section>
 
       {/* Əlaqə Məlumatları */}
-      <section className="py-16">
+      <section className="py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
             {/* Əlaqə Məlumatları */}
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">
                 Əlaqə Məlumatları
               </h2>
               <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-sdu-blue rounded-lg flex items-center justify-center">
+                <div className="flex items-start space-x-3 sm:space-x-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-sdu-blue rounded-lg flex items-center justify-center">
                     <svg
-                      className="w-6 h-6 text-white"
+                      className="w-5 h-5 sm:w-6 sm:h-6 text-white"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -56,10 +56,10 @@ export default function ElaqePage() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 sm:mb-2">
                       Ünvan
                     </h3>
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 text-sm sm:text-base">
                       Sumqayıt şəhəri
                       <br />
                       Bakı Küçəsi 1, 43-cü məhəllə
@@ -151,7 +151,7 @@ export default function ElaqePage() {
 
             {/* Əlaqə Formu */}
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">
                 Bizə Mesaj Göndərin
               </h2>
               <form className="space-y-6">
@@ -252,16 +252,18 @@ export default function ElaqePage() {
       </section>
 
       {/* Xəritə */}
-      <section className="bg-gray-100 py-16">
+      <section className="bg-gray-100 py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-6 sm:mb-8">
             Yerləşdiyimiz Yer
           </h2>
-          <div className="bg-white rounded-lg shadow-lg p-8 text-center">
-            <div className="w-full h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-              <p className="text-gray-500">Xəritə burada göstəriləcək</p>
+          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-8 text-center">
+            <div className="w-full h-48 sm:h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+              <p className="text-gray-500 text-sm sm:text-base">
+                Xəritə burada göstəriləcək
+              </p>
             </div>
-            <p className="text-gray-600 mt-4">
+            <p className="text-gray-600 mt-3 sm:mt-4 text-sm sm:text-base">
               Sumqayıt şəhəri, Bakı Küçəsi 1, 43-cü məhəllə, AZ5008
             </p>
           </div>

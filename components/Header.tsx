@@ -23,12 +23,12 @@ export default function Header() {
                   className="object-contain"
                 />
               </div>
-              <div className="hidden sm:block">
-                <h1 className="text-lg sm:text-xl font-bold text-gray-900">
-                  Sumqayıt Dövlət Universiteti
+              <div>
+                <h1 className="text-sm sm:text-lg lg:text-xl font-bold text-gray-900">
+                  Karyera və Məzunlarla İş Mərkəzi
                 </h1>
                 <p className="text-xs sm:text-sm text-gray-600">
-                  Karyera Portalı
+                  Sumqayıt Dövlət Universiteti
                 </p>
               </div>
             </Link>

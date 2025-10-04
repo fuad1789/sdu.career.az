@@ -185,26 +185,6 @@ export default function VakansiyalarPage() {
     },
   ];
 
-  const tips = [
-    {
-      title: "CV Optimallaşdırması",
-      description: "CV-nizi hər vakansiya üçün xüsusi olaraq hazırlayın",
-    },
-    {
-      title: "Açar Sözlər",
-      description:
-        "İş elanlarında istifadə olunan açar sözləri CV-nizdə istifadə edin",
-    },
-    {
-      title: "Şəbəkə Qurma",
-      description: "LinkedIn-də aktiv olun və peşəkar şəbəkə qurun",
-    },
-    {
-      title: "Müsahibə Hazırlığı",
-      description: "Şirkət haqqında araşdırma aparın və sualları hazırlayın",
-    },
-  ];
-
   return (
     <main className="min-h-screen bg-gray-50">
       <Header />
@@ -434,37 +414,6 @@ export default function VakansiyalarPage() {
         </div>
       </section>
 
-      {/* Məsləhətlər */}
-      <section className="bg-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              İş Axtarışı Məsləhətləri
-            </h2>
-            <p className="text-xl text-gray-600">
-              Uğurlu iş müraciəti üçün faydalı məsləhətlər
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {tips.map((tip, index) => (
-              <div
-                key={index}
-                className="bg-gray-50 rounded-lg p-6 text-center"
-              >
-                <div className="w-16 h-16 bg-teal-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
-                  {index + 1}
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {tip.title}
-                </h3>
-                <p className="text-gray-600">{tip.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Əlaqə */}
       <section className="bg-teal-600 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -497,4 +446,3 @@ export default function VakansiyalarPage() {
     </main>
   );
 }
-

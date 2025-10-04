@@ -9,13 +9,13 @@ export default function MuracietPage() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="bg-white py-16">
+      <section className="bg-white py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">
               Müraciət Et
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto px-4">
               Karyera və Məzunlarla İş Mərkəzinin xidmətlərindən istifadə etmək
               üçün müraciət edin
             </p>
@@ -24,15 +24,15 @@ export default function MuracietPage() {
       </section>
 
       {/* Müraciət Növləri */}
-      <section className="py-16">
+      <section className="py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {/* Təcrübə Müraciəti */}
-            <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+            <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300">
               <div className="text-center">
-                <div className="w-16 h-16 bg-blue-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-blue-500 rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center">
                   <svg
-                    className="w-8 h-8 text-white"
+                    className="w-6 h-6 sm:w-8 sm:h-8 text-white"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -45,14 +45,14 @@ export default function MuracietPage() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
                   Təcrübə Müraciəti
                 </h3>
-                <p className="text-gray-600 mb-4">
+                <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">
                   İstehsalat təcrübəsi, magistr təcrübəsi və müəssisə təcrübəsi
                   üçün müraciət edin
                 </p>
-                <button className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                <button className="w-full bg-blue-500 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm sm:text-base">
                   Müraciət Et
                 </button>
               </div>
@@ -215,21 +215,25 @@ export default function MuracietPage() {
       </section>
 
       {/* Müraciət Prosesi */}
-      <section className="bg-sdu-light-blue py-16">
+      <section className="bg-sdu-light-blue py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-          <h2 className="text-3xl font-bold mb-6">Müraciət Prosesi</h2>
-          <p className="text-xl mb-8 max-w-4xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">
+            Müraciət Prosesi
+          </h2>
+          <p className="text-base sm:text-lg lg:text-xl mb-6 sm:mb-8 max-w-4xl mx-auto px-4">
             Müraciət etmək üçün aşağıdakı addımları izləyin
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mt-12">
-            <div className="bg-white bg-opacity-10 rounded-lg p-6">
-              <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <span className="text-xl font-bold">1</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mt-8 sm:mt-12">
+            <div className="bg-white bg-opacity-10 rounded-lg p-4 sm:p-6">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white bg-opacity-20 rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center">
+                <span className="text-lg sm:text-xl font-bold">1</span>
               </div>
-              <h3 className="text-lg font-semibold mb-2">
+              <h3 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2">
                 Müraciət Növünü Seçin
               </h3>
-              <p className="text-blue-100">İstədiyiniz xidmət növünü seçin</p>
+              <p className="text-blue-100 text-sm sm:text-base">
+                İstədiyiniz xidmət növünü seçin
+              </p>
             </div>
             <div className="bg-white bg-opacity-10 rounded-lg p-6">
               <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full mx-auto mb-4 flex items-center justify-center">

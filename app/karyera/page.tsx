@@ -106,13 +106,13 @@ export default function KaryeraPage() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="bg-white py-16">
+      <section className="bg-white py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">
               Karyera İmkanları
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto px-4">
               Tələbələrin karyera planlaşdırmasına məsləhət və istiqamət
               verərək, onları iş dünyasına hazırlayırıq. Məzunlarla əlaqəni
               gücləndirərək, yeni imkanlar yaradırıq.
@@ -122,9 +122,9 @@ export default function KaryeraPage() {
       </section>
 
       {/* Karyera Xidmətləri */}
-      <section className="py-16">
+      <section className="py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {karyeraServices.map((service, index) => (
               <KaryeraCard key={index} {...service} />
             ))}
@@ -133,13 +133,13 @@ export default function KaryeraPage() {
       </section>
 
       {/* Mərkəz Haqqında */}
-      <section className="bg-sdu-light-blue py-16">
+      <section className="bg-sdu-light-blue py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center text-white">
-            <h2 className="text-3xl font-bold mb-6">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">
               Karyera və Məzunlarla İş Mərkəzi
             </h2>
-            <p className="text-xl mb-8 max-w-4xl mx-auto">
+            <p className="text-base sm:text-lg lg:text-xl mb-6 sm:mb-8 max-w-4xl mx-auto px-4">
               Sumqayıt Dövlət Universitetinin Karyera və Məzunlarla İş Mərkəzi
               universitetin struktur bölməsidir və ali təhsilin ikipilləli
               strukturunda magistrantların və bakalavrların ixtisasyönümlü
@@ -147,10 +147,12 @@ export default function KaryeraPage() {
               göstərməlidir.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-              <div className="bg-white bg-opacity-10 rounded-lg p-6">
-                <h3 className="text-xl font-semibold mb-4">Məqsəd</h3>
-                <p className="text-blue-100">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mt-8 sm:mt-12">
+              <div className="bg-white bg-opacity-10 rounded-lg p-4 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
+                  Məqsəd
+                </h3>
+                <p className="text-blue-100 text-sm sm:text-base">
                   Gənclərin bilik, praktiki bacarıq və vərdişlərinin
                   artırılması, onların məşğulluq problemlərinin həll edilməsi
                   üzrə kompleks təşkilati, texniki, informasiya, məsləhət,
@@ -158,9 +160,11 @@ export default function KaryeraPage() {
                 </p>
               </div>
 
-              <div className="bg-white bg-opacity-10 rounded-lg p-6">
-                <h3 className="text-xl font-semibold mb-4">Fəaliyyət</h3>
-                <p className="text-blue-100">
+              <div className="bg-white bg-opacity-10 rounded-lg p-4 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
+                  Fəaliyyət
+                </h3>
+                <p className="text-blue-100 text-sm sm:text-base">
                   Yerli və beynəlxalq şirkətlərlə, dövlət müəssisələri ilə
                   əməkdaşlıq etməkdən ibarətdir. Universitetə sənaye
                   müəsissələrindən və uğurlu SDU məzunlarından nümayəndələrin
@@ -169,9 +173,11 @@ export default function KaryeraPage() {
                 </p>
               </div>
 
-              <div className="bg-white bg-opacity-10 rounded-lg p-6">
-                <h3 className="text-xl font-semibold mb-4">Dəstək</h3>
-                <p className="text-blue-100">
+              <div className="bg-white bg-opacity-10 rounded-lg p-4 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
+                  Dəstək
+                </h3>
+                <p className="text-blue-100 text-sm sm:text-base">
                   Təhsilalanların qısa və uzunmüddətli kurslara və təlim
                   proqramlarına cəlb olunmasına, Karyeraya dair tədbirlərin
                   keçirilməsinə, məzunların ixtisaslarına uyğun iş imkanlarının
@@ -187,4 +193,3 @@ export default function KaryeraPage() {
     </main>
   );
 }
-

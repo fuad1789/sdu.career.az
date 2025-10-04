@@ -10,7 +10,11 @@ export default function Navigation() {
     {
       title: "Təcrübə İmkanları",
       href: "/tecrube",
-      subItems: [{ title: "Bakalavr", href: "/tecrube/bakalavr" }],
+      subItems: [
+        { title: "Bakalavr", href: "/tecrube/bakalavr" },
+        { title: "Magistr", href: "/tecrube/magistr" },
+        { title: "Müəssisə", href: "/tecrube/muessise" },
+      ],
     },
     {
       title: "Karyera İmkanları",
