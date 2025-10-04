@@ -13,9 +13,9 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-3">
-              <div className="w-12 h-12 relative">
+          <div className="flex items-center flex-shrink-0">
+            <Link href="/" className="flex items-center space-x-2 sm:space-x-3">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 relative">
                 <Image
                   src="/images/logo_b.png"
                   alt="SDU Logo"
@@ -24,53 +24,56 @@ export default function Header() {
                 />
               </div>
               <div className="hidden sm:block">
-                <h1 className="text-xl font-bold text-gray-900">
+                <h1 className="text-lg sm:text-xl font-bold text-gray-900">
                   Sumqayıt Dövlət Universiteti
                 </h1>
-                <p className="text-sm text-gray-600">Karyera Portalı</p>
+                <p className="text-xs sm:text-sm text-gray-600">
+                  Karyera Portalı
+                </p>
               </div>
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
+          {/* Desktop Navigation - Hidden on mobile and tablet */}
+          <nav className="hidden lg:flex space-x-6 xl:space-x-8">
             <Link
               href="/"
-              className="text-gray-700 hover:text-sdu-blue transition-colors"
+              className="text-gray-700 hover:text-sdu-blue transition-colors whitespace-nowrap"
             >
               Ana Səhifə
             </Link>
             <Link
               href="/tecrube"
-              className="text-gray-700 hover:text-sdu-blue transition-colors"
+              className="text-gray-700 hover:text-sdu-blue transition-colors whitespace-nowrap"
             >
               Təcrübə İmkanları
             </Link>
             <Link
               href="/karyera"
-              className="text-gray-700 hover:text-sdu-blue transition-colors"
+              className="text-gray-700 hover:text-sdu-blue transition-colors whitespace-nowrap"
             >
               Karyera İmkanları
             </Link>
             <Link
               href="/elanlar"
-              className="text-gray-700 hover:text-sdu-blue transition-colors"
+              className="text-gray-700 hover:text-sdu-blue transition-colors whitespace-nowrap"
             >
               Elanlar
             </Link>
             <Link
               href="/elaqe"
-              className="text-gray-700 hover:text-sdu-blue transition-colors"
+              className="text-gray-700 hover:text-sdu-blue transition-colors whitespace-nowrap"
             >
               Əlaqə
             </Link>
           </nav>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-700 hover:text-sdu-blue focus:outline-none"
+              className="text-gray-700 hover:text-sdu-blue focus:outline-none p-2"
+              aria-label="Menyunu aç"
             >
               <svg
                 className="h-6 w-6"

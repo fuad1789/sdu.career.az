@@ -29,48 +29,55 @@ export default function TestimonialsSection() {
   ];
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-12 sm:py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            Tələbə və Məzun Rəyləri
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
+            Tələbə və Məzun Təcrübələri
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Karyera Mərkəzimizin xidmətlərindən istifadə edən tələbə və
-            məzunlarımızın təcrübələri
+          <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto px-4">
+            Karyera Mərkəzimizin dəstəyi ilə uğur qazanan tələbə və
+            məzunlarımızın hekayələri
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="bg-gray-50 rounded-lg p-6 border border-gray-200"
+              className="bg-gray-50 rounded-lg p-4 sm:p-6 border border-gray-200"
             >
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-sdu-blue rounded-lg flex items-center justify-center mr-4">
-                  <span className="text-white font-bold">
+              <div className="flex items-center mb-3 sm:mb-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-sdu-blue rounded-lg flex items-center justify-center mr-3 sm:mr-4">
+                  <span className="text-white font-bold text-sm sm:text-base">
                     {testimonial.avatar}
                   </span>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900">
+                  <h4 className="font-semibold text-gray-900 text-sm sm:text-base">
                     {testimonial.name}
                   </h4>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-xs sm:text-sm text-gray-600">
                     {testimonial.position}
                   </p>
-                  <p className="text-sm text-sdu-blue">{testimonial.company}</p>
+                  <p className="text-xs sm:text-sm text-sdu-blue">
+                    {testimonial.company}
+                  </p>
                 </div>
               </div>
 
-              <div className="flex items-center mb-3">
+              <div className="flex items-center mb-2 sm:mb-3">
                 {[...Array(5)].map((_, i) => (
-                  <FaStar key={i} className="w-4 h-4 text-yellow-400" />
+                  <FaStar
+                    key={i}
+                    className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400"
+                  />
                 ))}
               </div>
 
-              <p className="text-gray-700 italic">"{testimonial.content}"</p>
+              <p className="text-gray-700 italic text-sm sm:text-base leading-relaxed">
+                "{testimonial.content}"
+              </p>
             </div>
           ))}
         </div>

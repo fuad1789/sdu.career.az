@@ -55,21 +55,21 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="bg-white shadow-md hidden lg:block">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex space-x-8">
+        <div className="flex space-x-6 xl:space-x-8">
           {navigationItems.map((item) => (
             <div key={item.title} className="relative group">
               <Link
                 href={item.href}
-                className="flex items-center px-3 py-4 text-sm font-medium text-gray-700 hover:text-sdu-blue hover:bg-gray-50 transition-colors"
+                className="flex items-center px-2 xl:px-3 py-4 text-sm font-medium text-gray-700 hover:text-sdu-blue hover:bg-gray-50 transition-colors whitespace-nowrap"
                 onMouseEnter={() => setActiveDropdown(item.title)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
                 {item.title}
                 {item.subItems.length > 0 && (
                   <svg
-                    className="ml-1 h-4 w-4"
+                    className="ml-1 h-4 w-4 flex-shrink-0"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
