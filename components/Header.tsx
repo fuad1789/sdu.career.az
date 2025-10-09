@@ -66,6 +66,12 @@ export default function Header() {
             >
               Əlaqə
             </Link>
+            <Link
+              href="/admin/login"
+              className="text-gray-500 hover:text-gray-700 transition-colors whitespace-nowrap text-sm"
+            >
+              Admin
+            </Link>
           </nav>
 
           {/* Mobile menu button */}

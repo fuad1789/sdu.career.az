@@ -60,6 +60,11 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       href: "/muraciet",
       subItems: [],
     },
+    {
+      title: "Admin Panel",
+      href: "/admin/login",
+      subItems: [],
+    },
   ];
 
   if (!isOpen) return null;

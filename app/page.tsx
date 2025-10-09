@@ -7,6 +7,7 @@ import StatsSection from "@/components/StatsSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import NewsSection from "@/components/NewsSection";
+import GraduateSearch from "@/components/GraduateSearch";
 
 export default function Home() {
   const announcements = [
@@ -44,6 +45,7 @@ export default function Home() {
       <Header />
       <Navigation />
       <Hero />
+      <GraduateSearch />
       <LatestAnnouncements announcements={announcements} />
       <StatsSection />
       <FeaturesSection />
