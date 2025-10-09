@@ -44,3 +44,12 @@ next-env.d.ts
 
 # OS
 Thumbs.db
+
+# Google Cloud Service Account credentials
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!next.config.js
+!postcss.config.js
+!tailwind.config.js
