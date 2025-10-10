@@ -85,19 +85,6 @@ export default function KaryeraPage() {
       icon: "💻",
       color: "bg-indigo-500",
     },
-    {
-      title: "Vakansiyalar",
-      description: "Müxtəlif sahələrdə iş imkanları və vakansiyalar",
-      href: "/karyera/vakansiyalar",
-      features: [
-        "Yerli və beynəlxalq vakansiyalar",
-        "İxtisaslaşmış iş imkanları",
-        "Staj və təcrübə imkanları",
-        "Karyera imkanları",
-      ],
-      icon: "🔍",
-      color: "bg-teal-500",
-    },
   ];
 
   return (

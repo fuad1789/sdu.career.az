@@ -23,6 +23,7 @@ interface User {
   fullName: string;
   email: string;
   graduationYear: string;
+  specialty: string;
   workingInField: string;
   workField: string;
   workplace: string;
@@ -349,25 +350,16 @@ export default function GraduateSearch() {
                     <div className="flex items-center space-x-2 mb-2">
                       <FaUser className="w-4 h-4 text-blue-600" />
                       <h4 className="font-semibold text-gray-900">
-                        Şəxsi Məlumatlar
+                        Məzun Məlumatları
                       </h4>
                     </div>
-                    <div className="grid grid-cols-1 gap-2">
-                      <div>
-                        <p className="text-xs text-gray-600 mb-1">Ad Soyad</p>
-                        <p className="text-gray-900 font-medium text-sm">
-                          {selectedUser.fullName || "Məlumat yoxdur"}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-600 mb-1">Email</p>
-                        <div className="flex items-center space-x-1">
-                          <FaEnvelope className="w-3 h-3 text-gray-400" />
-                          <p className="text-gray-900 text-sm">
-                            {selectedUser.email || "Məlumat yoxdur"}
-                          </p>
-                        </div>
-                      </div>
+                    <div>
+                      <p className="text-xs text-gray-600 mb-1">
+                        Ad, Ata adı, Soyad
+                      </p>
+                      <p className="text-gray-900 font-medium text-sm">
+                        {selectedUser.fullName || "Məlumat yoxdur"}
+                      </p>
                     </div>
                   </div>
 
@@ -379,14 +371,22 @@ export default function GraduateSearch() {
                         Təhsil Məlumatları
                       </h4>
                     </div>
-                    <div>
-                      <p className="text-xs text-gray-600 mb-1">
-                        Məzuniyyət İli
-                      </p>
-                      <div className="flex items-center space-x-1">
-                        <FaCalendar className="w-3 h-3 text-gray-400" />
+                    <div className="space-y-2">
+                      <div>
+                        <p className="text-xs text-gray-600 mb-1">
+                          Məzun olduğunuz il
+                        </p>
+                        <div className="flex items-center space-x-1">
+                          <FaCalendar className="w-3 h-3 text-gray-400" />
+                          <p className="text-gray-900 font-medium text-sm">
+                            {selectedUser.graduationYear || "Məlumat yoxdur"}
+                          </p>
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-600 mb-1">İxtisas</p>
                         <p className="text-gray-900 font-medium text-sm">
-                          {selectedUser.graduationYear || "Məlumat yoxdur"}
+                          {selectedUser.specialty || "Məlumat yoxdur"}
                         </p>
                       </div>
                     </div>
@@ -400,69 +400,23 @@ export default function GraduateSearch() {
                         İş Məlumatları
                       </h4>
                     </div>
-                    <div className="space-y-2">
-                      <div>
-                        <p className="text-xs text-gray-600 mb-1">
-                          İş Vəziyyəti
-                        </p>
-                        <span
-                          className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
-                            selectedUser.workingInField === "Bəli"
-                              ? "bg-green-100 text-green-700"
-                              : "bg-red-100 text-red-700"
-                          }`}
-                        >
-                          {selectedUser.workingInField === "Bəli"
-                            ? "İxtisasına Uyğun İşləyir"
-                            : "İxtisasına Uyğun İşləmir"}
-                        </span>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-600 mb-1">İş Sahəsi</p>
-                        <p className="text-gray-900 text-sm">
-                          {selectedUser.workField || "Məlumat yoxdur"}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-600 mb-1">
-                          İş Yeri və Vəzifə
-                        </p>
-                        <div className="flex items-center space-x-1">
-                          <FaBuilding className="w-3 h-3 text-gray-400" />
-                          <p className="text-gray-900 text-sm">
-                            {selectedUser.workplace || "Məlumat yoxdur"}
-                          </p>
-                        </div>
-                      </div>
+                    <div>
+                      <p className="text-xs text-gray-600 mb-1">
+                        İxtisasına uyğun işləyirsinizmi?
+                      </p>
+                      <span
+                        className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                          selectedUser.workingInField === "Bəli"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-red-100 text-red-700"
+                        }`}
+                      >
+                        {selectedUser.workingInField === "Bəli"
+                          ? "İxtisasına Uyğun İşləyir"
+                          : "İxtisasına Uyğun İşləmir"}
+                      </span>
                     </div>
                   </div>
-
-                  {/* Career Services */}
-                  {selectedUser.careerServices && (
-                    <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
-                      <div className="flex items-center space-x-2 mb-2">
-                        <FaBriefcase className="w-4 h-4 text-orange-600" />
-                        <h4 className="font-semibold text-gray-900">
-                          Karyera Xidmətləri
-                        </h4>
-                      </div>
-                      <p className="text-gray-900 text-sm">
-                        {selectedUser.careerServices}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Additional Notes */}
-                  {selectedUser.additionalNotes && (
-                    <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
-                      <h4 className="font-semibold text-gray-900 mb-2">
-                        Əlavə Qeydlər
-                      </h4>
-                      <p className="text-gray-900 text-sm">
-                        {selectedUser.additionalNotes}
-                      </p>
-                    </div>
-                  )}
                 </div>
               </div>
 

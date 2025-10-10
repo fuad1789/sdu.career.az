@@ -4,8 +4,8 @@ import Fuse from "fuse.js";
 
 // Google Sheets configuration
 const SHEET_ID = "10ZkghKWs2CjbVuTHcvf22wR9lH7MxSriDITpWEBpE2w";
-const SHEET_NAME = "Form Responses 1"; // Worksheet name
-const RANGE = "A:L"; // Columns A to L
+const SHEET_NAME = "Main"; // Worksheet name
+const RANGE = "A:K"; // Columns A to K
 
 // Service account credentials
 const credentials = {
@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
     // Read data from Google Sheets
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: SHEET_ID,
-      range: `${SHEET_NAME}!${RANGE}`,
+      range: `Main!${RANGE}`,
     });
 
     const rows = response.data.values;
@@ -86,6 +86,9 @@ export async function GET(request: NextRequest) {
             break;
           case "Məzun olduğunuz il:":
             user.graduationYear = value;
+            break;
+          case "İxtisas":
+            user.specialty = value;
             break;
           case "İxtisasınıza uyğun işləyirsinizmi?":
             user.workingInField = value;

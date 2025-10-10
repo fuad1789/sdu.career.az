@@ -9,36 +9,48 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import NewsSection from "@/components/NewsSection";
 import GraduateSearch from "@/components/GraduateSearch";
 
-export default function Home() {
-  const announcements = [
-    {
-      title:
-        "SDU-nun tələbələri Karyera və Psixologiya Mərkəzinin sertifikatlarına layiq görüldülər",
-      date: "2024-12-15",
-      category: "Sertifikat",
-      description:
-        "Tələbələrimiz karyera və psixologiya sahəsində əldə etdikləri uğurlar nəticəsində sertifikatlara layiq görülmüşdür.",
-      href: "/elanlar",
-    },
-    {
-      title:
-        'Tələbələrimiz "Azərtexnolayn" istehsalat müəssisəsində təcrübə keçəcək',
-      date: "2024-12-10",
-      category: "Təcrübə",
-      description:
-        'Müxtəlif fakültələrdən tələbələrimiz "Azərtexnolayn" istehsalat müəssisəsində təcrübə keçmək imkanı əldə edəcəklər.',
-      href: "/elanlar",
-    },
-    {
-      title:
-        'SDU ilə "Gilan Tekstil Parkı" MMC tələbələrə yeni imkanların yaradılması üçün birgə fəaliyyət göstərəcəklər',
-      date: "2024-12-05",
-      category: "Əməkdaşlıq",
-      description:
-        'Universitetimiz "Gilan Tekstil Parkı" MMC ilə tələbələrə yeni imkanların yaradılması üçün birgə fəaliyyət göstərəcək.',
-      href: "/elanlar",
-    },
-  ];
+interface Announcement {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  date: string;
+  status: string;
+  priority: string;
+}
+
+interface AnnouncementsResponse {
+  announcements: Announcement[];
+  total: number;
+  lastUpdated: string;
+}
+
+async function getLatestAnnouncements(): Promise<Announcement[]> {
+  try {
+    const response = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+      }/api/elanlar?limit=3`,
+      {
+        cache: "no-store", // Always fetch fresh data
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch announcements");
+    }
+
+    const data: AnnouncementsResponse = await response.json();
+    return data.announcements.slice(0, 3); // Get only first 3 for homepage
+  } catch (error) {
+    console.error("Error fetching announcements:", error);
+    // Return empty array as fallback
+    return [];
+  }
+}
+
+export default async function Home() {
+  const announcements = await getLatestAnnouncements();
 
   return (
     <main className="min-h-screen bg-gray-50">

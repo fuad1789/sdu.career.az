@@ -126,18 +126,6 @@ export default function OnlaynResurslarPage() {
       ],
     },
     {
-      title: "İnteraktiv Alətlər",
-      description: "Karyera planlaşdırması üçün alətlər",
-      count: "15+",
-      icon: "🛠️",
-      categories: [
-        "Karyera testləri",
-        "Bacarıq qiymətləndirməsi",
-        "Məqsəd müəyyənləşdirmə",
-        "İş axtarışı planı",
-      ],
-    },
-    {
       title: "Şablonlar və Nümunələr",
       description: "CV, məktub və digər sənədlər üçün şablonlar",
       count: "25+",
@@ -147,57 +135,6 @@ export default function OnlaynResurslarPage() {
         "İş məktubu nümunələri",
         "Portfolio şablonları",
         "Email şablonları",
-      ],
-    },
-  ];
-
-  const tools = [
-    {
-      title: "Karyera Testi",
-      description: "Karyera istiqamətinizi müəyyənləşdirin",
-      icon: "🧭",
-      link: "#",
-      features: [
-        "Peşə seçimi testi",
-        "Bacarıq analizi",
-        "Şəxsiyyət testi",
-        "Karyera uyğunluğu",
-      ],
-    },
-    {
-      title: "CV Builder",
-      description: "Peşəkar CV hazırlayın",
-      icon: "📝",
-      link: "#",
-      features: [
-        "Müasir şablonlar",
-        "Açar sözlər",
-        "PDF export",
-        "A/B testing",
-      ],
-    },
-    {
-      title: "İş Axtarışı Tracker",
-      description: "İş axtarışınızı idarə edin",
-      icon: "📊",
-      link: "#",
-      features: [
-        "Müraciət izləməsi",
-        "Müsahibə planlaşdırması",
-        "Statistikalar",
-        "Xatırlatmalar",
-      ],
-    },
-    {
-      title: "Şəbəkə Qurma Plani",
-      description: "Peşəkar şəbəkənizi qurun",
-      icon: "🌐",
-      link: "#",
-      features: [
-        "LinkedIn optimallaşdırması",
-        "Tədbir planlaşdırması",
-        "Əlaqə izləməsi",
-        "Follow-up strategiyaları",
       ],
     },
   ];
@@ -389,63 +326,6 @@ export default function OnlaynResurslarPage() {
         </div>
       </section>
 
-      {/* İnteraktiv Alətlər */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              İnteraktiv Alətlər
-            </h2>
-            <p className="text-xl text-gray-600">
-              Karyera inkişafınız üçün praktik alətlər
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {tools.map((tool, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-lg p-6">
-                <div className="flex items-start space-x-4 mb-4">
-                  <div className="text-4xl">{tool.icon}</div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                      {tool.title}
-                    </h3>
-                    <p className="text-gray-600">{tool.description}</p>
-                  </div>
-                </div>
-
-                <ul className="space-y-2 mb-4">
-                  {tool.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-start">
-                      <span className="text-indigo-500 mr-2">✓</span>
-                      <span className="text-sm text-gray-700">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <a
-                  href={tool.link}
-                  className="inline-flex items-center text-indigo-600 hover:text-indigo-700 font-medium"
-                >
-                  Aləti İstifadə Et
-                  <svg
-                    className="w-4 h-4 ml-1"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Əlaqə */}
       <section className="bg-indigo-600 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -479,4 +359,3 @@ export default function OnlaynResurslarPage() {
     </main>
   );
 }
-

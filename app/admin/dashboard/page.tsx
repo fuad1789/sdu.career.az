@@ -144,7 +144,9 @@ export default function AdminDashboard() {
                 <FaBriefcase className="w-6 h-6 text-green-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">İşləyən</p>
+                <p className="text-sm font-medium text-gray-600">
+                  İxtisasına uyğun İşləyən
+                </p>
                 <p className="text-2xl font-semibold text-gray-900">
                   {loading ? "..." : userStats.working}
                 </p>
@@ -191,14 +193,17 @@ export default function AdminDashboard() {
             Sürətli Əməliyyatlar
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <button className="bg-white rounded-lg shadow p-4 text-left hover:shadow-md transition duration-200">
+            <button
+              onClick={() => router.push("/admin/elanlar")}
+              className="bg-white rounded-lg shadow p-4 text-left hover:shadow-md transition duration-200"
+            >
               <div className="flex items-center">
                 <div className="p-2 bg-blue-100 rounded-lg">
                   <FaPlus className="w-5 h-5 text-blue-600" />
                 </div>
                 <div className="ml-3">
-                  <p className="font-medium text-gray-900">Yeni Elan</p>
-                  <p className="text-sm text-gray-600">Elan əlavə et</p>
+                  <p className="font-medium text-gray-900">Elanlar</p>
+                  <p className="text-sm text-gray-600">Elanları idarə et</p>
                 </div>
               </div>
             </button>
@@ -227,6 +232,25 @@ export default function AdminDashboard() {
                   <p className="font-medium text-gray-900">İstifadəçilər</p>
                   <p className="text-sm text-gray-600">
                     İstifadəçiləri idarə et
+                  </p>
+                </div>
+              </div>
+            </button>
+
+            <button
+              onClick={() => router.push("/admin/pending-registrations")}
+              className="bg-white rounded-lg shadow p-4 text-left hover:shadow-md transition duration-200"
+            >
+              <div className="flex items-center">
+                <div className="p-2 bg-orange-100 rounded-lg">
+                  <FaFileAlt className="w-5 h-5 text-orange-600" />
+                </div>
+                <div className="ml-3">
+                  <p className="font-medium text-gray-900">
+                    Pending Qeydiyyatlar
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Gözləyən qeydiyyatları bax
                   </p>
                 </div>
               </div>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -32,7 +33,6 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           title: "Karyeraya Dair Onlayn Resurslar",
           href: "/karyera/resurslar",
         },
-        { title: "Vakansiyalar", href: "/karyera/vakansiyalar" },
       ],
     },
     {
@@ -58,11 +58,6 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     {
       title: "Müraciət Et",
       href: "/muraciet",
-      subItems: [],
-    },
-    {
-      title: "Admin Panel",
-      href: "/admin/login",
       subItems: [],
     },
   ];
@@ -97,6 +92,17 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
         <div className="overflow-y-auto h-full pb-20">
           <nav className="p-4">
+            {/* Qeydiyat Button */}
+            <div className="mb-6">
+              <Link
+                href="/mezun-qeydiyyati"
+                className="block w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-3 rounded-lg font-medium text-center transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg"
+                onClick={onClose}
+              >
+                Məzun Qeydiyatı
+              </Link>
+            </div>
+
             {navigationItems.map((item) => (
               <div key={item.title} className="mb-4">
                 <Link
@@ -122,6 +128,42 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 )}
               </div>
             ))}
+
+            {/* Sosial Medya */}
+            <div className="mt-8 pt-6 border-t border-gray-200">
+              <h3 className="text-sm font-semibold text-gray-900 mb-4">
+                Sosial Medya
+              </h3>
+              <div className="flex space-x-4">
+                <a
+                  href="https://www.linkedin.com/company/sdu-karyera-v%C9%99-m%C9%99zunlarla-i%CC%87%C5%9F-m%C9%99rk%C9%99zi/posts/?feedView=all"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-blue-600 transition-colors"
+                  aria-label="LinkedIn"
+                >
+                  <FaLinkedin className="w-6 h-6" />
+                </a>
+                <a
+                  href="https://www.facebook.com/profile.php?id=61578289313321"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-blue-600 transition-colors"
+                  aria-label="Facebook"
+                >
+                  <FaFacebook className="w-6 h-6" />
+                </a>
+                <a
+                  href="https://www.instagram.com/sdu.karyera"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-pink-500 transition-colors"
+                  aria-label="Instagram"
+                >
+                  <FaInstagram className="w-6 h-6" />
+                </a>
+              </div>
+            </div>
           </nav>
         </div>
       </div>

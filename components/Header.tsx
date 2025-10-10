@@ -35,13 +35,7 @@ export default function Header() {
           </div>
 
           {/* Desktop Navigation - Hidden on mobile and tablet */}
-          <nav className="hidden lg:flex space-x-6 xl:space-x-8">
-            <Link
-              href="/"
-              className="text-gray-700 hover:text-sdu-blue transition-colors whitespace-nowrap"
-            >
-              Ana Səhifə
-            </Link>
+          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
             <Link
               href="/tecrube"
               className="text-gray-700 hover:text-sdu-blue transition-colors whitespace-nowrap"
@@ -67,10 +61,10 @@ export default function Header() {
               Əlaqə
             </Link>
             <Link
-              href="/admin/login"
-              className="text-gray-500 hover:text-gray-700 transition-colors whitespace-nowrap text-sm"
+              href="/mezun-qeydiyyati"
+              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg whitespace-nowrap"
             >
-              Admin
+              Mezun Qeydiyatı
             </Link>
           </nav>
 

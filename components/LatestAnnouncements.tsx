@@ -6,7 +6,6 @@ interface Announcement {
   date: string;
   category: string;
   description: string;
-  href?: string;
 }
 
 interface LatestAnnouncementsProps {
@@ -70,32 +69,9 @@ export default function LatestAnnouncements({
                 </h3>
 
                 {/* Description with improved spacing */}
-                <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base leading-relaxed">
+                <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
                   {announcement.description}
                 </p>
-
-                {/* Enhanced CTA button */}
-                {announcement.href && (
-                  <Link
-                    href={announcement.href}
-                    className="inline-flex items-center text-sdu-blue hover:text-blue-700 font-semibold text-sm group-hover:translate-x-1 transition-all duration-300"
-                  >
-                    Ətraflı oxu
-                    <svg
-                      className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </Link>
-                )}
               </div>
             );
           })}

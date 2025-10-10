@@ -28,7 +28,6 @@ export default function Navigation() {
           title: "Karyeraya Dair Onlayn Resurslar",
           href: "/karyera/resurslar",
         },
-        { title: "Vakansiyalar", href: "/karyera/vakansiyalar" },
       ],
     },
     {

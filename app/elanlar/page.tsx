@@ -2,33 +2,48 @@ import Header from "@/components/Header";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
-export default function ElanlarPage() {
-  const elanlar = [
-    {
-      title:
-        "SDU-nun tələbələri Karyera və Psixologiya Mərkəzinin sertifikatlarına layiq görüldülər",
-      date: "2024-12-15",
-      category: "Sertifikat",
-      description:
-        "Tələbələrimiz karyera və psixologiya sahəsində əldə etdikləri uğurlar nəticəsində sertifikatlara layiq görülmüşdür.",
-    },
-    {
-      title:
-        'Tələbələrimiz "Azərtexnolayn" istehsalat müəssisəsində təcrübə keçəcək',
-      date: "2024-12-10",
-      category: "Təcrübə",
-      description:
-        'Müxtəlif fakültələrdən tələbələrimiz "Azərtexnolayn" istehsalat müəssisəsində təcrübə keçmək imkanı əldə edəcəklər.',
-    },
-    {
-      title:
-        'SDU ilə "Gilan Tekstil Parkı" MMC tələbələrə yeni imkanların yaradılması üçün birgə fəaliyyət göstərəcəklər',
-      date: "2024-12-05",
-      category: "Əməkdaşlıq",
-      description:
-        'Universitetimiz "Gilan Tekstil Parkı" MMC ilə tələbələrə yeni imkanların yaradılması üçün birgə fəaliyyət göstərəcək.',
-    },
-  ];
+interface Announcement {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  date: string;
+  status: string;
+  priority: string;
+}
+
+interface AnnouncementsResponse {
+  announcements: Announcement[];
+  total: number;
+  lastUpdated: string;
+}
+
+async function getAnnouncements(): Promise<Announcement[]> {
+  try {
+    const response = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+      }/api/elanlar`,
+      {
+        cache: "no-store", // Always fetch fresh data
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch announcements");
+    }
+
+    const data: AnnouncementsResponse = await response.json();
+    return data.announcements;
+  } catch (error) {
+    console.error("Error fetching announcements:", error);
+    // Return empty array as fallback
+    return [];
+  }
+}
+
+export default async function ElanlarPage() {
+  const elanlar = await getAnnouncements();
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -71,12 +86,9 @@ export default function ElanlarPage() {
                     <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3 leading-tight">
                       {elan.title}
                     </h3>
-                    <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base leading-relaxed">
+                    <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
                       {elan.description}
                     </p>
-                    <button className="text-sdu-blue hover:text-blue-700 font-medium text-sm sm:text-base">
-                      Ətraflı oxu →
-                    </button>
                   </div>
                 </div>
               </div>

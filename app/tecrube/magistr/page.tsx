@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import Link from "next/link";
 
 export default function MagistrTecrubePage() {
   return (
@@ -242,9 +243,12 @@ export default function MagistrTecrubePage() {
             Magistr təcrübəsi üçün müraciət etmək istəyirsinizsə, aşağıdakı
             düyməyə klikləyin
           </p>
-          <button className="bg-white text-purple-600 px-6 sm:px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-sm sm:text-base">
+          <Link
+            href="/elaqe"
+            className="inline-block bg-white text-purple-600 px-6 sm:px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-sm sm:text-base"
+          >
             Müraciət Et
-          </button>
+          </Link>
         </div>
       </section>
 
