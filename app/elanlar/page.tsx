@@ -21,11 +21,12 @@ interface AnnouncementsResponse {
 async function getAnnouncements(): Promise<Announcement[]> {
   try {
     // Use full URL for both production and local development
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 
-      (process.env.NODE_ENV === 'production' 
-        ? 'https://sdu-career-az.vercel.app' 
-        : 'http://localhost:3000');
-    
+    const baseUrl =
+      process.env.NEXT_PUBLIC_BASE_URL ||
+      (process.env.NODE_ENV === "production"
+        ? "https://sdu-career-az.vercel.app"
+        : "http://localhost:3000");
+
     const response = await fetch(`${baseUrl}/api/elanlar`, {
       cache: "no-store", // Always fetch fresh data
     });

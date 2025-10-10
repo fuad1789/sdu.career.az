@@ -55,11 +55,6 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       href: "/elaqe",
       subItems: [],
     },
-    {
-      title: "Müraciət Et",
-      href: "/muraciet",
-      subItems: [],
-    },
   ];
 
   if (!isOpen) return null;

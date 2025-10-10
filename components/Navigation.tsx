@@ -50,11 +50,6 @@ export default function Navigation() {
       href: "/elaqe",
       subItems: [],
     },
-    {
-      title: "Müraciət Et",
-      href: "/muraciet",
-      subItems: [],
-    },
   ];
 
   return (
