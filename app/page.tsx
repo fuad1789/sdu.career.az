@@ -27,10 +27,11 @@ interface AnnouncementsResponse {
 
 async function getLatestAnnouncements(): Promise<Announcement[]> {
   try {
-    // Use relative URL for production, absolute for local development
-    const baseUrl = process.env.NODE_ENV === 'production' 
-      ? '' 
-      : (process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000');
+    // Use full URL for both production and local development
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 
+      (process.env.NODE_ENV === 'production' 
+        ? 'https://sdu-career-az.vercel.app' 
+        : 'http://localhost:3000');
     
     const response = await fetch(`${baseUrl}/api/elanlar?limit=3`, {
       cache: "no-store", // Always fetch fresh data
