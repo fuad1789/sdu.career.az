@@ -20,7 +20,11 @@ interface AnnouncementsResponse {
 
 async function getAnnouncements(): Promise<Announcement[]> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    // Use relative URL for production, absolute for local development
+    const baseUrl = process.env.NODE_ENV === 'production' 
+      ? '' 
+      : (process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000');
+    
     const response = await fetch(`${baseUrl}/api/elanlar`, {
       cache: "no-store", // Always fetch fresh data
     });
