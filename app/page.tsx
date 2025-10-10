@@ -27,14 +27,10 @@ interface AnnouncementsResponse {
 
 async function getLatestAnnouncements(): Promise<Announcement[]> {
   try {
-    const response = await fetch(
-      `${
-        process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
-      }/api/elanlar?limit=3`,
-      {
-        cache: "no-store", // Always fetch fresh data
-      }
-    );
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const response = await fetch(`${baseUrl}/api/elanlar?limit=3`, {
+      cache: "no-store", // Always fetch fresh data
+    });
 
     if (!response.ok) {
       throw new Error("Failed to fetch announcements");
