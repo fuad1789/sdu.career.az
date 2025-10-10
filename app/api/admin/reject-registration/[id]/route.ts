@@ -68,7 +68,7 @@ export async function PUT(
     // Delete from Pending sheet
     await sheets.spreadsheets.batchUpdate({
       spreadsheetId: SHEET_ID,
-      resource: {
+      requestBody: {
         requests: [
           {
             deleteDimension: {

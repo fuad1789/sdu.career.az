@@ -96,7 +96,7 @@ export async function PUT(
         spreadsheetId: SHEET_ID,
         range: `Main!${MAIN_RANGE}`, // Use exact sheet name
         valueInputOption: "RAW",
-        resource: {
+        requestBody: {
           values: [registrationData],
         },
       });
@@ -116,7 +116,7 @@ export async function PUT(
       // Only delete from Pending sheet if Main sheet append was successful
       await sheets.spreadsheets.batchUpdate({
         spreadsheetId: SHEET_ID,
-        resource: {
+        requestBody: {
           requests: [
             {
               deleteDimension: {

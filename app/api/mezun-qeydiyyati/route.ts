@@ -99,7 +99,7 @@ export async function POST(request: NextRequest) {
       spreadsheetId: SHEET_ID,
       range: `Pending!${PENDING_RANGE}`, // Use exact sheet name
       valueInputOption: "RAW",
-      resource: {
+      requestBody: {
         values: [pendingRowData],
       },
     });
