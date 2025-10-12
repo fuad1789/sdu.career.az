@@ -25,15 +25,28 @@ export default function AdminDashboard() {
   const router = useRouter();
 
   useEffect(() => {
-    // Check if user is authenticated
-    const authStatus = localStorage.getItem("adminAuth");
-    if (authStatus === "true") {
-      setIsAuthenticated(true);
-      fetchUserStats();
-    } else {
+    // Check if user is authenticated via server-side verification
+    checkAuthStatus();
+  }, [router]);
+
+  const checkAuthStatus = async () => {
+    try {
+      const response = await fetch("/api/admin/verify-token", {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        setIsAuthenticated(true);
+        fetchUserStats();
+      } else {
+        router.push("/admin/login");
+      }
+    } catch (error) {
+      console.error("Auth check failed:", error);
       router.push("/admin/login");
     }
-  }, [router]);
+  };
 
   const fetchUserStats = async () => {
     try {
@@ -79,9 +92,17 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("adminAuth");
-    router.push("/admin/login");
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/admin/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      router.push("/admin/login");
+    }
   };
 
   if (!isAuthenticated) {
@@ -192,7 +213,7 @@ export default function AdminDashboard() {
           <h2 className="text-xl font-semibold text-gray-900 mb-4">
             Sürətli Əməliyyatlar
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <button
               onClick={() => router.push("/admin/elanlar")}
               className="bg-white rounded-lg shadow p-4 text-left hover:shadow-md transition duration-200"
@@ -204,18 +225,6 @@ export default function AdminDashboard() {
                 <div className="ml-3">
                   <p className="font-medium text-gray-900">Elanlar</p>
                   <p className="text-sm text-gray-600">Elanları idarə et</p>
-                </div>
-              </div>
-            </button>
-
-            <button className="bg-white rounded-lg shadow p-4 text-left hover:shadow-md transition duration-200">
-              <div className="flex items-center">
-                <div className="p-2 bg-green-100 rounded-lg">
-                  <FaBriefcase className="w-5 h-5 text-green-600" />
-                </div>
-                <div className="ml-3">
-                  <p className="font-medium text-gray-900">Vakansiya</p>
-                  <p className="text-sm text-gray-600">Vakansiya əlavə et</p>
                 </div>
               </div>
             </button>
@@ -247,23 +256,11 @@ export default function AdminDashboard() {
                 </div>
                 <div className="ml-3">
                   <p className="font-medium text-gray-900">
-                    Pending Qeydiyyatlar
+                    Gözləyən Qeydiyyatlar
                   </p>
                   <p className="text-sm text-gray-600">
                     Gözləyən qeydiyyatları bax
                   </p>
-                </div>
-              </div>
-            </button>
-
-            <button className="bg-white rounded-lg shadow p-4 text-left hover:shadow-md transition duration-200">
-              <div className="flex items-center">
-                <div className="p-2 bg-orange-100 rounded-lg">
-                  <FaChartBar className="w-5 h-5 text-orange-600" />
-                </div>
-                <div className="ml-3">
-                  <p className="font-medium text-gray-900">Statistika</p>
-                  <p className="text-sm text-gray-600">Statistikaları gör</p>
                 </div>
               </div>
             </button>

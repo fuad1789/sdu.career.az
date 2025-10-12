@@ -1,104 +1,72 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
-export default function OnlaynResurslarPage() {
-  const onlineCourses = [
-    {
-      title: "Karyera Planlaşdırması",
-      description: "Karyera yolunuzu planlaşdırmaq üçün əsas prinsiplər",
-      duration: "4 həftə",
-      level: "Başlanğıc",
-      instructor: "Dr. Leyla Məmmədova",
-      price: "Pulsuz",
-      features: [
-        "Karyera məqsədlərinin müəyyənləşdirilməsi",
-        "Bacarıq analizi",
-        "İş bazarının araşdırılması",
-        "Karyera planının hazırlanması",
-      ],
-      icon: "🎯",
-    },
-    {
-      title: "CV və Müsahibə Hazırlığı",
-      description: "Peşəkar CV hazırlama və müsahibə texnikaları",
-      duration: "3 həftə",
-      level: "Orta",
-      instructor: "Elçin Həsənov",
-      price: "Pulsuz",
-      features: [
-        "CV yazma texnikaları",
-        "Müsahibə növləri",
-        "Bədən dili",
-        "Mock müsahibələr",
-      ],
-      icon: "📝",
-    },
-    {
-      title: "Şəbəkə Qurma və LinkedIn",
-      description: "Peşəkar şəbəkə qurma və LinkedIn-dən istifadə",
-      duration: "2 həftə",
-      level: "Başlanğıc",
-      instructor: "Aysel Rəhimova",
-      price: "Pulsuz",
-      features: [
-        "LinkedIn profil optimallaşdırması",
-        "Şəbəkə qurma strategiyaları",
-        "Peşəkar əlaqələr",
-        "Online presence",
-      ],
-      icon: "🌐",
-    },
-    {
-      title: "Soft Skills İnkişafı",
-      description: "Kommunikasiya, liderlik və komanda işi bacarıqları",
-      duration: "5 həftə",
-      level: "Orta",
-      instructor: "Rəşad Əliyev",
-      price: "Pulsuz",
-      features: [
-        "Kommunikasiya bacarıqları",
-        "Liderlik keyfiyyətləri",
-        "Komanda işi",
-        "Konflikt həlli",
-      ],
-      icon: "🤝",
-    },
-  ];
+interface Course {
+  id: number;
+  title: string;
+  description: string;
+  instructor: string;
+  price: string;
+  topics: string[];
+  level: string;
+  duration: string;
+  registrationLink: string;
+}
 
-  const webinars = [
-    {
-      title: "İş Bazarında Uğur Strategiyaları",
-      date: "2024-12-20",
-      time: "15:00",
-      speaker: "Dr. Leyla Məmmədova",
-      description:
-        "Müasir iş bazarında uğur qazanmaq üçün strategiyalar və texnikalar",
-      duration: "60 dəqiqə",
-      attendees: 150,
-      status: "upcoming",
-    },
-    {
-      title: "Startup Dünyası və Entrepreneurship",
-      date: "2024-12-25",
-      time: "14:00",
-      speaker: "Elçin Həsənov",
-      description: "Startup qurma və öz biznesinizi inkişaf etdirmə haqqında",
-      duration: "90 dəqiqə",
-      attendees: 200,
-      status: "upcoming",
-    },
-    {
-      title: "Beynəlxalq Karyera İmkanları",
-      date: "2024-11-30",
-      time: "16:00",
-      speaker: "Aysel Rəhimova",
-      description: "Beynəlxalq şirkətlərdə iş imkanları və tələblər",
-      duration: "75 dəqiqə",
-      attendees: 120,
-      status: "completed",
-    },
-  ];
+export default function OnlaynResurslarPage() {
+  const [onlineCourses, setOnlineCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch("/api/kurslar");
+        if (!response.ok) {
+          throw new Error("Failed to fetch courses");
+        }
+        const data = await response.json();
+        setOnlineCourses(data.courses || []);
+      } catch (err) {
+        console.error("Error fetching courses:", err);
+        setError("Kurslar yüklənərkən xəta baş verdi");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  // Helper function to get icon based on course title
+  const getCourseIcon = (title: string): string => {
+    if (
+      title.toLowerCase().includes("karyera") ||
+      title.toLowerCase().includes("planlaş")
+    ) {
+      return "🎯";
+    } else if (
+      title.toLowerCase().includes("cv") ||
+      title.toLowerCase().includes("müsahibə")
+    ) {
+      return "📝";
+    } else if (
+      title.toLowerCase().includes("şəbəkə") ||
+      title.toLowerCase().includes("linkedin")
+    ) {
+      return "🌐";
+    } else if (
+      title.toLowerCase().includes("soft") ||
+      title.toLowerCase().includes("kommunikasiya")
+    ) {
+      return "🤝";
+    }
+    return "📚";
+  };
 
   const resources = [
     {
@@ -172,120 +140,85 @@ export default function OnlaynResurslarPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {onlineCourses.map((course, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow"
+          {loading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+            </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <p className="text-red-600 text-lg">{error}</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="mt-4 bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="text-4xl">{course.icon}</div>
-                  <div className="text-right">
-                    <span className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium">
-                      {course.level}
-                    </span>
-                    <p className="text-sm text-gray-600 mt-1">
-                      {course.duration}
-                    </p>
-                  </div>
-                </div>
-
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {course.title}
-                </h3>
-                <p className="text-gray-600 mb-3">{course.description}</p>
-
-                <div className="mb-4">
-                  <p className="text-sm text-gray-600">
-                    <strong>Müəllim:</strong> {course.instructor}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    <strong>Qiymət:</strong>{" "}
-                    <span className="text-green-600 font-medium">
-                      {course.price}
-                    </span>
-                  </p>
-                </div>
-
-                <ul className="space-y-2 mb-4">
-                  {course.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-start">
-                      <span className="text-indigo-500 mr-2">✓</span>
-                      <span className="text-sm text-gray-700">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <button className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors">
-                  Kursa Qoşul
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Vebinarlar */}
-      <section className="bg-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Vebinarlar və Təlimlər
-            </h2>
-            <p className="text-xl text-gray-600">
-              Karyera mütəxəssisləri ilə canlı vebinarlar
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {webinars.map((webinar, index) => (
-              <div key={index} className="bg-gray-50 rounded-lg p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                      {webinar.title}
-                    </h3>
-                    <div className="flex items-center text-gray-600 mb-2">
-                      <span className="mr-4">📅 {webinar.date}</span>
-                      <span className="mr-4">🕒 {webinar.time}</span>
+                Yenidən Yoxla
+              </button>
+            </div>
+          ) : onlineCourses.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600 text-lg">
+                Hal-hazırda mövcud kurs yoxdur
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {onlineCourses.map((course) => (
+                <div
+                  key={course.id}
+                  className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow"
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="text-4xl">
+                      {getCourseIcon(course.title)}
                     </div>
-                    <p className="text-gray-600 mb-2">
-                      <strong>Müəllim:</strong> {webinar.speaker}
+                    <div className="text-right">
+                      <span className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium">
+                        {course.level}
+                      </span>
+                      <p className="text-sm text-gray-600 mt-1">
+                        {course.duration}
+                      </p>
+                    </div>
+                  </div>
+
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    {course.title}
+                  </h3>
+                  <p className="text-gray-600 mb-3">{course.description}</p>
+
+                  <div className="mb-4">
+                    <p className="text-sm text-gray-600">
+                      <strong>Müəllim:</strong> {course.instructor}
                     </p>
-                    <p className="text-gray-600">
-                      <strong>Müddət:</strong> {webinar.duration}
+                    <p className="text-sm text-gray-600">
+                      <strong>Qiymət:</strong>{" "}
+                      <span className="text-green-600 font-medium">
+                        {course.price}
+                      </span>
                     </p>
                   </div>
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm font-medium ${
-                      webinar.status === "upcoming"
-                        ? "bg-green-100 text-green-800"
-                        : "bg-gray-100 text-gray-800"
-                    }`}
+
+                  <ul className="space-y-2 mb-4">
+                    {course.topics.map((topic, topicIndex) => (
+                      <li key={topicIndex} className="flex items-start">
+                        <span className="text-indigo-500 mr-2">✓</span>
+                        <span className="text-sm text-gray-700">{topic}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <a
+                    href={course.registrationLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors inline-block text-center"
                   >
-                    {webinar.status === "upcoming" ? "Gələcək" : "Keçmiş"}
-                  </span>
+                    Kursa Qoşul
+                  </a>
                 </div>
-
-                <p className="text-gray-700 mb-4">{webinar.description}</p>
-
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">
-                    👥 {webinar.attendees} iştirakçı
-                  </span>
-                  {webinar.status === "upcoming" ? (
-                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
-                      Qeydiyyatdan Keç
-                    </button>
-                  ) : (
-                    <button className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
-                      Qeydiyyatı İzlə
-                    </button>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

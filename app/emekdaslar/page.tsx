@@ -24,7 +24,7 @@ export default function EmekdaslarPage() {
         "Erasmus PETRA layihəsi – Tədqiqat bacarıqlarının inkişaf etdirilməsi",
       ],
       email: "anar.dunyamaliyev@sdu.edu.az",
-      phone: "+994-018-64-2-15-06",
+      phone: "+994 (018)-646-20-33",
     },
   ];
 

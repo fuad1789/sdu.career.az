@@ -1,62 +1,58 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
-export default function KaryeraGunleriPage() {
-  const upcomingEvents = [
-    {
-      title: "IT Karyera Günü 2024",
-      date: "2024-12-20",
-      time: "10:00 - 16:00",
-      location: "SDU Konfrans Zalı",
-      description:
-        "İnformasiya texnologiyaları sahəsində karyera imkanları və təcrübə paylaşımı",
-      companies: ["Microsoft", "Google", "IBM", "Azercell"],
-      type: "IT",
-      status: "upcoming",
-    },
-    {
-      title: "Biznes və İqtisadiyyat Karyera Günü",
-      date: "2024-12-25",
-      time: "09:00 - 15:00",
-      location: "SDU Biznes Mərkəzi",
-      description:
-        "Biznes və iqtisadiyyat sahəsində karyera imkanları və şəbəkə qurma",
-      companies: ["PwC", "Deloitte", "EY", "KPMG"],
-      type: "Business",
-      status: "upcoming",
-    },
-    {
-      title: "Mühəndislik Karyera Günü",
-      date: "2025-01-10",
-      time: "10:00 - 17:00",
-      location: "SDU Mühəndislik Fakültəsi",
-      description:
-        "Mühəndislik sahəsində karyera imkanları və texnoloji yeniliklər",
-      companies: ["BP", "SOCAR", "Azal", "Azərsu"],
-      type: "Engineering",
-      status: "upcoming",
-    },
-  ];
+interface Event {
+  id: string;
+  title: string;
+  date: string;
+  time: string;
+  location: string;
+  description: string;
+  companies: string[];
+  category: string;
+  status: string;
+  registrationLink?: string;
+}
 
-  const pastEvents = [
-    {
-      title: "Karyera Günü 2024 - Payız",
-      date: "2024-11-15",
-      description: "Ümumi karyera imkanları və məzunlarla görüş",
-      participants: 150,
-      companies: 25,
-      status: "completed",
-    },
-    {
-      title: "Startup və İnnovasiya Günü",
-      date: "2024-10-20",
-      description: "Startup ekosistemi və innovasiya imkanları",
-      participants: 80,
-      companies: 15,
-      status: "completed",
-    },
-  ];
+export default function KaryeraGunleriPage() {
+  const [upcomingEvents, setUpcomingEvents] = useState<Event[]>([]);
+  const [pastEvents, setPastEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        setLoading(true);
+
+        // Fetch upcoming events
+        const upcomingResponse = await fetch("/api/tebirler?status=upcoming");
+        const upcomingData = await upcomingResponse.json();
+
+        // Fetch past events
+        const pastResponse = await fetch("/api/tebirler?status=past");
+        const pastData = await pastResponse.json();
+
+        if (upcomingResponse.ok && pastResponse.ok) {
+          setUpcomingEvents(upcomingData.events || []);
+          setPastEvents(pastData.events || []);
+        } else {
+          setError("Tədbirlər məlumatları yüklənə bilmədi");
+        }
+      } catch (err) {
+        console.error("Error fetching events:", err);
+        setError("Server xətası baş verdi");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
 
   const eventTypes = [
     {
@@ -155,52 +151,118 @@ export default function KaryeraGunleriPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {upcomingEvents.map((event, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow"
+          {loading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
+              <span className="ml-3 text-gray-600">Tədbirlər yüklənir...</span>
+            </div>
+          ) : error ? (
+            <div className="text-center py-12">
+              <div className="text-red-600 mb-4">⚠️ {error}</div>
+              <button
+                onClick={() => window.location.reload()}
+                className="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 transition-colors"
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                      {event.title}
-                    </h3>
-                    <div className="flex items-center text-gray-600 mb-2">
-                      <span className="mr-4">📅 {event.date}</span>
-                      <span className="mr-4">🕒 {event.time}</span>
-                    </div>
-                    <p className="text-gray-600 mb-2">📍 {event.location}</p>
-                  </div>
-                  <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">
-                    {event.type}
-                  </span>
-                </div>
-
-                <p className="text-gray-700 mb-4">{event.description}</p>
-
-                <div className="mb-4">
-                  <h4 className="font-medium text-gray-900 mb-2">
-                    İştirak edən şirkətlər:
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {event.companies.map((company, companyIndex) => (
-                      <span
-                        key={companyIndex}
-                        className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-sm"
-                      >
-                        {company}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <button className="w-full bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 transition-colors">
-                  Qeydiyyatdan Keç
-                </button>
+                Yenidən Yoxla
+              </button>
+            </div>
+          ) : upcomingEvents.length === 0 ? (
+            <div className="text-center py-12">
+              <div className="text-gray-600 mb-4">
+                📅 Hal-hazırda gələcək tədbir yoxdur
               </div>
-            ))}
-          </div>
+              <p className="text-gray-500">
+                Yeni tədbirlər əlavə edildikcə burada görünəcək
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {upcomingEvents.map((event, index) => (
+                <div
+                  key={event.id || index}
+                  className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow flex flex-col h-full"
+                >
+                  {/* Header Section */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      <h3
+                        className="text-xl font-semibold text-gray-900 mb-2 overflow-hidden"
+                        style={{
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical",
+                        }}
+                      >
+                        {event.title}
+                      </h3>
+                      <div className="flex items-center text-gray-600 mb-2">
+                        <span className="mr-4">📅 {event.date}</span>
+                        <span className="mr-4">🕒 {event.time}</span>
+                      </div>
+                      <p className="text-gray-600 mb-2">📍 {event.location}</p>
+                    </div>
+                    <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap">
+                      {event.category}
+                    </span>
+                  </div>
+
+                  {/* Content Section - Flexible */}
+                  <div className="flex-1 flex flex-col">
+                    <p
+                      className="text-gray-700 mb-4 flex-1 overflow-hidden"
+                      style={{
+                        display: "-webkit-box",
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: "vertical",
+                      }}
+                    >
+                      {event.description}
+                    </p>
+
+                    {event.companies && event.companies.length > 0 && (
+                      <div className="mb-4">
+                        <h4 className="font-medium text-gray-900 mb-2">
+                          İştirak edən şirkətlər:
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {event.companies.map((company, companyIndex) => (
+                            <span
+                              key={companyIndex}
+                              className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-sm"
+                            >
+                              {company}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Footer Section - Fixed at bottom */}
+                  <div className="mt-auto">
+                    {event.registrationLink &&
+                    event.registrationLink.trim() !== "" ? (
+                      <a
+                        href={event.registrationLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 transition-colors block text-center"
+                      >
+                        Qeydiyyatdan Keç
+                      </a>
+                    ) : (
+                      <button
+                        className="w-full bg-gray-400 text-white py-2 px-4 rounded-lg cursor-not-allowed"
+                        disabled
+                      >
+                        Qeydiyyat Linki Yoxdur
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -250,21 +312,94 @@ export default function KaryeraGunleriPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {pastEvents.map((event, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-lg p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {event.title}
-                </h3>
-                <p className="text-gray-600 mb-2">📅 {event.date}</p>
-                <p className="text-gray-700 mb-4">{event.description}</p>
-                <div className="flex justify-between text-sm text-gray-600">
-                  <span>👥 {event.participants} iştirakçı</span>
-                  <span>🏢 {event.companies} şirkət</span>
-                </div>
+          {loading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
+              <span className="ml-3 text-gray-600">
+                Keçmiş tədbirlər yüklənir...
+              </span>
+            </div>
+          ) : pastEvents.length === 0 ? (
+            <div className="text-center py-12">
+              <div className="text-gray-600 mb-4">
+                📚 Keçmiş tədbir məlumatı yoxdur
               </div>
-            ))}
-          </div>
+              <p className="text-gray-500">
+                Keçmiş tədbirlər əlavə edildikcə burada görünəcək
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {pastEvents.map((event, index) => (
+                <div
+                  key={event.id || index}
+                  className="bg-white rounded-lg shadow-lg p-6 flex flex-col h-full"
+                >
+                  {/* Header Section */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      <h3
+                        className="text-xl font-semibold text-gray-900 mb-2 overflow-hidden"
+                        style={{
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical",
+                        }}
+                      >
+                        {event.title}
+                      </h3>
+                      <div className="flex items-center text-gray-600 mb-2">
+                        <span className="mr-4">📅 {event.date}</span>
+                        {event.time && (
+                          <span className="mr-4">🕒 {event.time}</span>
+                        )}
+                      </div>
+                      {event.location && (
+                        <p className="text-gray-600 mb-2">
+                          📍 {event.location}
+                        </p>
+                      )}
+                    </div>
+                    <span className="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap">
+                      {event.category}
+                    </span>
+                  </div>
+
+                  {/* Content Section - Flexible */}
+                  <div className="flex-1 flex flex-col">
+                    <p
+                      className="text-gray-700 mb-4 flex-1 overflow-hidden"
+                      style={{
+                        display: "-webkit-box",
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: "vertical",
+                      }}
+                    >
+                      {event.description}
+                    </p>
+
+                    {event.companies && event.companies.length > 0 && (
+                      <div className="mb-4">
+                        <h4 className="font-medium text-gray-900 mb-2">
+                          İştirak edən şirkətlər:
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {event.companies.map((company, companyIndex) => (
+                            <span
+                              key={companyIndex}
+                              className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-sm"
+                            >
+                              {company}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -329,4 +464,3 @@ export default function KaryeraGunleriPage() {
     </main>
   );
 }
-

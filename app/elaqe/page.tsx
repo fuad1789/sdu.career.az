@@ -89,7 +89,7 @@ export default function ElaqePage() {
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">
                       Telefon
                     </h3>
-                    <p className="text-gray-600">+994-018-64-2-15-06</p>
+                    <p className="text-gray-600">+994 (018)-646-20-33</p>
                   </div>
                 </div>
 
@@ -113,7 +113,7 @@ export default function ElaqePage() {
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">
                       E-Mail
                     </h3>
-                    <p className="text-gray-600">info@sdu.edu.az</p>
+                    <p className="text-gray-600">sdu.karyera@sdu.edu.az</p>
                   </div>
                 </div>
 

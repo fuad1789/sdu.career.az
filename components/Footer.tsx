@@ -1,6 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa";
+import {
+  FaLinkedin,
+  FaFacebook,
+  FaInstagram,
+  FaWhatsapp,
+} from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -83,8 +88,8 @@ export default function Footer() {
               <p>Sumqayıt şəhəri</p>
               <p>Bakı Küçəsi 1, 43-cü məhəllə</p>
               <p>AZ5008</p>
-              <p>Telefon: +994-018-64-2-15-06</p>
-              <p>E-Mail: info@sdu.edu.az</p>
+              <p>Telefon: +994 (018)-646-20-33</p>
+              <p>E-Mail: sdu.karyera@sdu.edu.az</p>
             </div>
           </div>
         </div>
@@ -127,6 +132,15 @@ export default function Footer() {
                 aria-label="Instagram"
               >
                 <FaInstagram className="w-6 h-6" />
+              </a>
+              <a
+                href="https://wa.me/+994705663888"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-green-400 transition-colors"
+                aria-label="WhatsApp"
+              >
+                <FaWhatsapp className="w-6 h-6" />
               </a>
             </div>
           </div>

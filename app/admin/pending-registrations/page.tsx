@@ -32,15 +32,28 @@ export default function PendingRegistrations() {
   const router = useRouter();
 
   useEffect(() => {
-    // Check if user is authenticated
-    const authStatus = localStorage.getItem("adminAuth");
-    if (authStatus === "true") {
-      setIsAuthenticated(true);
-      fetchPendingRegistrations();
-    } else {
+    // Check if user is authenticated via server-side verification
+    checkAuthStatus();
+  }, [router]);
+
+  const checkAuthStatus = async () => {
+    try {
+      const response = await fetch("/api/admin/verify-token", {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        setIsAuthenticated(true);
+        fetchPendingRegistrations();
+      } else {
+        router.push("/admin/login");
+      }
+    } catch (error) {
+      console.error("Auth check failed:", error);
       router.push("/admin/login");
     }
-  }, [router]);
+  };
 
   const fetchPendingRegistrations = async () => {
     try {
@@ -122,9 +135,17 @@ export default function PendingRegistrations() {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("adminAuth");
-    router.push("/admin/login");
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/admin/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      router.push("/admin/login");
+    }
   };
 
   const openModal = (registration: PendingRegistration) => {

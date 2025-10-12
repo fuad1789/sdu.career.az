@@ -6,7 +6,7 @@ import LatestAnnouncements from "@/components/LatestAnnouncements";
 import StatsSection from "@/components/StatsSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import NewsSection from "@/components/NewsSection";
+// import NewsSection from "@/components/NewsSection";
 import GraduateSearch from "@/components/GraduateSearch";
 
 interface Announcement {
@@ -64,7 +64,7 @@ export default async function Home() {
       <StatsSection />
       <FeaturesSection />
       <TestimonialsSection />
-      <NewsSection />
+      {/* <NewsSection /> */}
       <Footer />
     </main>
   );

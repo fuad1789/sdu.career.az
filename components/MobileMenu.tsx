@@ -2,7 +2,12 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa";
+import {
+  FaLinkedin,
+  FaFacebook,
+  FaInstagram,
+  FaWhatsapp,
+} from "react-icons/fa";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -156,6 +161,15 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   aria-label="Instagram"
                 >
                   <FaInstagram className="w-6 h-6" />
+                </a>
+                <a
+                  href="https://wa.me/+994705663888"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-green-500 transition-colors"
+                  aria-label="WhatsApp"
+                >
+                  <FaWhatsapp className="w-6 h-6" />
                 </a>
               </div>
             </div>

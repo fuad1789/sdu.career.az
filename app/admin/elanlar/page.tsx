@@ -45,15 +45,28 @@ export default function AdminAnnouncements() {
   const router = useRouter();
 
   useEffect(() => {
-    // Check if user is authenticated
-    const authStatus = localStorage.getItem("adminAuth");
-    if (authStatus === "true") {
-      setIsAuthenticated(true);
-      fetchAnnouncements();
-    } else {
+    // Check if user is authenticated via server-side verification
+    checkAuthStatus();
+  }, [router]);
+
+  const checkAuthStatus = async () => {
+    try {
+      const response = await fetch("/api/admin/verify-token", {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        setIsAuthenticated(true);
+        fetchAnnouncements();
+      } else {
+        router.push("/admin/login");
+      }
+    } catch (error) {
+      console.error("Auth check failed:", error);
       router.push("/admin/login");
     }
-  }, [router]);
+  };
 
   const fetchAnnouncements = async () => {
     try {
@@ -71,9 +84,17 @@ export default function AdminAnnouncements() {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("adminAuth");
-    router.push("/admin/login");
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/admin/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      router.push("/admin/login");
+    }
   };
 
   const getCategoryIcon = (category: string) => {
