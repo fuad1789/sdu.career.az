@@ -223,9 +223,6 @@ export default function GraduateSearch() {
                           Ad Soyad
                         </th>
                         <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          İş Vəziyyəti
-                        </th>
-                        <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Əməliyyat
                         </th>
                       </tr>
@@ -241,19 +238,6 @@ export default function GraduateSearch() {
                             <div className="text-sm font-medium text-gray-900">
                               {user.fullName || "Məlumat yoxdur"}
                             </div>
-                          </td>
-                          <td className="px-4 py-3 whitespace-nowrap">
-                            <span
-                              className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                                user.workingInField === "Bəli"
-                                  ? "bg-green-100 text-green-800"
-                                  : "bg-red-100 text-red-800"
-                              }`}
-                            >
-                              {user.workingInField === "Bəli"
-                                ? "İşləyir"
-                                : "İşləmir"}
-                            </span>
                           </td>
                           <td className="px-4 py-3 whitespace-nowrap">
                             <div className="flex items-center text-blue-600 hover:text-blue-800">
@@ -317,10 +301,10 @@ export default function GraduateSearch() {
 
         {/* User Details Modal */}
         {showModal && selectedUser && (
-          <div className="fixed inset-0 bg-black/30 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-in fade-in duration-300">
-            <div className="bg-white rounded-3xl shadow-2xl max-w-lg w-full max-h-[80vh] overflow-hidden border border-gray-200/50 animate-in zoom-in-95 duration-300">
+          <div className="fixed inset-0 bg-black/30 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 z-50 animate-in fade-in duration-300">
+            <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-lg w-full max-h-[95vh] sm:max-h-[90vh] overflow-hidden border border-gray-200/50 animate-in zoom-in-95 duration-300 flex flex-col mx-2">
               {/* Modal Header */}
-              <div className="px-6 py-6 border-b border-gray-100/80 bg-gradient-to-r from-gray-50 to-white">
+              <div className="px-4 sm:px-6 py-4 sm:py-6 border-b border-gray-100/80 bg-gradient-to-r from-gray-50 to-white flex-shrink-0">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700 rounded-2xl flex items-center justify-center shadow-lg">
@@ -343,7 +327,7 @@ export default function GraduateSearch() {
               </div>
 
               {/* Modal Content */}
-              <div className="p-4 overflow-y-auto max-h-[calc(80vh-180px)] scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+              <div className="px-4 sm:px-6 py-4 overflow-y-auto flex-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                 <div className="space-y-3 pt-2 pb-4">
                   {/* Personal Information */}
                   <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
@@ -391,37 +375,11 @@ export default function GraduateSearch() {
                       </div>
                     </div>
                   </div>
-
-                  {/* Work Information */}
-                  <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <FaBriefcase className="w-4 h-4 text-purple-600" />
-                      <h4 className="font-semibold text-gray-900">
-                        İş Məlumatları
-                      </h4>
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-600 mb-1">
-                        İxtisasına uyğun işləyirsinizmi?
-                      </p>
-                      <span
-                        className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
-                          selectedUser.workingInField === "Bəli"
-                            ? "bg-green-100 text-green-700"
-                            : "bg-red-100 text-red-700"
-                        }`}
-                      >
-                        {selectedUser.workingInField === "Bəli"
-                          ? "İxtisasına Uyğun İşləyir"
-                          : "İxtisasına Uyğun İşləmir"}
-                      </span>
-                    </div>
-                  </div>
                 </div>
               </div>
 
               {/* Modal Footer */}
-              <div className="px-6 py-5 border-t border-gray-100/80 bg-gradient-to-r from-gray-50 to-white">
+              <div className="px-4 sm:px-6 py-4 sm:py-5 border-t border-gray-100/80 bg-gradient-to-r from-gray-50 to-white flex-shrink-0">
                 <button
                   onClick={closeModal}
                   className="w-full bg-gradient-to-r from-gray-900 to-gray-800 text-white py-3.5 rounded-2xl hover:from-gray-800 hover:to-gray-700 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"

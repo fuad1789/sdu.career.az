@@ -321,9 +321,6 @@ export default function UsersPage() {
                       Məzuniyyət İli
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      İş Vəziyyəti
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       İş Sahəsi
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -350,19 +347,6 @@ export default function UsersPage() {
                           <FaCalendar className="w-3 h-3 mr-1 text-gray-400" />
                           {user.graduationYear || "Məlumat yoxdur"}
                         </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span
-                          className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                            user.workingInField === "Bəli"
-                              ? "bg-green-100 text-green-800"
-                              : "bg-red-100 text-red-800"
-                          }`}
-                        >
-                          {user.workingInField === "Bəli"
-                            ? "İşləyir"
-                            : "İşləmir"}
-                        </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900">

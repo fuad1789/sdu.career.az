@@ -1,8 +1,73 @@
+"use client";
+
+import { useState } from "react";
 import Header from "@/components/Header";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
 export default function ElaqePage() {
+  const [formData, setFormData] = useState({
+    adSoyad: "",
+    email: "",
+    telefon: "",
+    movzu: "",
+    mesaj: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("/api/muracietler", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus("success");
+        setFormData({
+          adSoyad: "",
+          email: "",
+          telefon: "",
+          movzu: "",
+          mesaj: "",
+        });
+      } else {
+        setSubmitStatus("error");
+        setErrorMessage(data.error || "Xəta baş verdi");
+      }
+    } catch (error) {
+      setSubmitStatus("error");
+      setErrorMessage("Server xətası baş verdi");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <main className="min-h-screen bg-gray-50">
       <Header />
@@ -154,19 +219,37 @@ export default function ElaqePage() {
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8">
                 Bizə Mesaj Göndərin
               </h2>
-              <form className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Success Message */}
+                {submitStatus === "success" && (
+                  <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg">
+                    Müraciətiniz uğurla göndərildi! Tezliklə sizinlə əlaqə
+                    saxlayacağıq.
+                  </div>
+                )}
+
+                {/* Error Message */}
+                {submitStatus === "error" && (
+                  <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
+                    {errorMessage}
+                  </div>
+                )}
+
                 <div>
                   <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    htmlFor="adSoyad"
+                    className="block text-sm font-medium text-black mb-2"
                   >
                     Ad Soyad
                   </label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sdu-blue focus:border-transparent"
+                    id="adSoyad"
+                    name="adSoyad"
+                    value={formData.adSoyad}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sdu-blue focus:border-transparent text-black placeholder:text-black"
                     placeholder="Adınızı və soyadınızı daxil edin"
                   />
                 </div>
@@ -174,7 +257,7 @@ export default function ElaqePage() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    className="block text-sm font-medium text-black mb-2"
                   >
                     E-Mail
                   </label>
@@ -182,68 +265,83 @@ export default function ElaqePage() {
                     type="email"
                     id="email"
                     name="email"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sdu-blue focus:border-transparent"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sdu-blue focus:border-transparent text-black placeholder:text-black"
                     placeholder="E-mail ünvanınızı daxil edin"
                   />
                 </div>
 
                 <div>
                   <label
-                    htmlFor="phone"
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    htmlFor="telefon"
+                    className="block text-sm font-medium text-black mb-2"
                   >
                     Telefon
                   </label>
                   <input
                     type="tel"
-                    id="phone"
-                    name="phone"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sdu-blue focus:border-transparent"
+                    id="telefon"
+                    name="telefon"
+                    value={formData.telefon}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sdu-blue focus:border-transparent text-black placeholder:text-black"
                     placeholder="Telefon nömrənizi daxil edin"
                   />
                 </div>
 
                 <div>
                   <label
-                    htmlFor="subject"
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    htmlFor="movzu"
+                    className="block text-sm font-medium text-black mb-2"
                   >
                     Mövzu
                   </label>
                   <select
-                    id="subject"
-                    name="subject"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sdu-blue focus:border-transparent"
+                    id="movzu"
+                    name="movzu"
+                    value={formData.movzu}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sdu-blue focus:border-transparent text-black"
                   >
                     <option value="">Mövzunu seçin</option>
-                    <option value="tecrube">Təcrübə İmkanları</option>
-                    <option value="karyera">Karyera Xidmətləri</option>
-                    <option value="elanlar">Elanlar</option>
-                    <option value="umumi">Ümumi Sual</option>
+                    <option value="Təcrübə İmkanları">Təcrübə İmkanları</option>
+                    <option value="Karyera Xidmətləri">
+                      Karyera Xidmətləri
+                    </option>
+                    <option value="Elanlar">Elanlar</option>
+                    <option value="Ümumi Sual">Ümumi Sual</option>
                   </select>
                 </div>
 
                 <div>
                   <label
-                    htmlFor="message"
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    htmlFor="mesaj"
+                    className="block text-sm font-medium text-black mb-2"
                   >
                     Mesaj
                   </label>
                   <textarea
-                    id="message"
-                    name="message"
+                    id="mesaj"
+                    name="mesaj"
+                    value={formData.mesaj}
+                    onChange={handleInputChange}
+                    required
                     rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sdu-blue focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sdu-blue focus:border-transparent text-black placeholder:text-black"
                     placeholder="Mesajınızı buraya yazın"
                   ></textarea>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full bg-sdu-blue text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                  disabled={isSubmitting}
+                  className="w-full bg-sdu-blue text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Mesaj Göndər
+                  {isSubmitting ? "Göndərilir..." : "Mesaj Göndər"}
                 </button>
               </form>
             </div>
@@ -257,13 +355,20 @@ export default function ElaqePage() {
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-6 sm:mb-8">
             Yerləşdiyimiz Yer
           </h2>
-          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-8 text-center">
-            <div className="w-full h-48 sm:h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-              <p className="text-gray-500 text-sm sm:text-base">
-                Xəritə burada göstəriləcək
-              </p>
+          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-8">
+            <div className="w-full h-64 sm:h-80 rounded-lg overflow-hidden">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3030.4884230281978!2d49.675287775835635!3d40.57497317141471!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4030912b2cbbf477%3A0x6acc6600f49ba00e!2sSumgay%C4%B1t%20Devlet%20%C3%9Cniversitesi!5e0!3m2!1str!2saz!4v1760294746950!5m2!1str!2saz"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="SDU Karyera Mərkəzi Yerləşdiyi Yer"
+              ></iframe>
             </div>
-            <p className="text-gray-600 mt-3 sm:mt-4 text-sm sm:text-base">
+            <p className="text-gray-600 mt-4 text-center text-sm sm:text-base">
               Sumqayıt şəhəri, Bakı Küçəsi 1, 43-cü məhəllə, AZ5008
             </p>
           </div>

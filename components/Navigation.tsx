@@ -23,6 +23,7 @@ export default function Navigation() {
         { title: "Karyera Xidmətləri", href: "/karyera/xidmetler" },
         { title: "Karyera Məsləhəti", href: "/karyera/meslehet" },
         { title: "Karyera Günləri", href: "/karyera/gunler" },
+        { title: "Peşəkar İnkişaf", href: "/karyera/pesekar-inkisaf" },
         { title: "Məzunlarımız və Uğur Hekayələri", href: "/karyera/mezunlar" },
         {
           title: "Karyeraya Dair Onlayn Resurslar",

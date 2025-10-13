@@ -10,16 +10,19 @@ import {
   FaUserCog,
   FaChartBar,
   FaSignOutAlt,
+  FaEnvelope,
 } from "react-icons/fa";
 
 export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userStats, setUserStats] = useState({
     total: 0,
-    working: 0,
-    notWorking: 0,
     recentGraduates: 0,
     careerServices: 0,
+  });
+  const [notificationCounts, setNotificationCounts] = useState({
+    pendingRegistrations: 0,
+    unansweredApplications: 0,
   });
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -39,6 +42,7 @@ export default function AdminDashboard() {
       if (response.ok) {
         setIsAuthenticated(true);
         fetchUserStats();
+        fetchNotificationCounts();
       } else {
         router.push("/admin/login");
       }
@@ -57,12 +61,6 @@ export default function AdminDashboard() {
 
       if (response.ok) {
         const users = data.users;
-        const working = users.filter(
-          (user: any) => user.workingInField === "Bəli"
-        ).length;
-        const notWorking = users.filter(
-          (user: any) => user.workingInField === "Xeyr"
-        ).length;
 
         // Recent graduates (last 2 years)
         const currentYear = new Date().getFullYear();
@@ -79,8 +77,6 @@ export default function AdminDashboard() {
 
         setUserStats({
           total: data.total, // Use total from API response
-          working,
-          notWorking,
           recentGraduates,
           careerServices,
         });
@@ -89,6 +85,45 @@ export default function AdminDashboard() {
       console.error("Error fetching user stats:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchNotificationCounts = async () => {
+    try {
+      // Fetch pending registrations count
+      const pendingResponse = await fetch("/api/admin/pending-registrations");
+      const pendingData = await pendingResponse.json();
+
+      // Fetch applications count
+      const applicationsResponse = await fetch("/api/muracietler");
+      const applicationsData = await applicationsResponse.json();
+
+      if (pendingResponse.ok && applicationsResponse.ok) {
+        const pendingCount = pendingData.registrations?.length || 0;
+
+        // Debug: Log the applications data
+        console.log("Applications data:", applicationsData);
+        console.log("Applications array:", applicationsData.applications);
+
+        const unansweredCount =
+          applicationsData.applications?.filter(
+            (app: any) =>
+              app.Status === "Gözləyir" ||
+              app.status === "Gözləyir" ||
+              app["Cavbalandi?"] === "gozleyir" ||
+              app["Cavbalandi?"] === "Gözləyir" ||
+              app["Cavbalandi?"] === "Gözləyir"
+          ).length || 0;
+
+        console.log("Unanswered count:", unansweredCount);
+
+        setNotificationCounts({
+          pendingRegistrations: pendingCount,
+          unansweredApplications: unansweredCount,
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching notification counts:", error);
     }
   };
 
@@ -141,7 +176,7 @@ export default function AdminDashboard() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Stats Cards */}
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center">
@@ -154,22 +189,6 @@ export default function AdminDashboard() {
                 </p>
                 <p className="text-2xl font-semibold text-gray-900">
                   {loading ? "..." : userStats.total}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center">
-              <div className="p-2 bg-green-100 rounded-lg">
-                <FaBriefcase className="w-6 h-6 text-green-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">
-                  İxtisasına uyğun İşləyən
-                </p>
-                <p className="text-2xl font-semibold text-gray-900">
-                  {loading ? "..." : userStats.working}
                 </p>
               </div>
             </div>
@@ -248,7 +267,7 @@ export default function AdminDashboard() {
 
             <button
               onClick={() => router.push("/admin/pending-registrations")}
-              className="bg-white rounded-lg shadow p-4 text-left hover:shadow-md transition duration-200"
+              className="bg-white rounded-lg shadow p-4 text-left hover:shadow-md transition duration-200 relative"
             >
               <div className="flex items-center">
                 <div className="p-2 bg-orange-100 rounded-lg">
@@ -263,6 +282,33 @@ export default function AdminDashboard() {
                   </p>
                 </div>
               </div>
+              {notificationCounts.pendingRegistrations > 0 && (
+                <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-6 w-6 flex items-center justify-center">
+                  {notificationCounts.pendingRegistrations}
+                </div>
+              )}
+            </button>
+
+            <button
+              onClick={() => router.push("/admin/muracietler")}
+              className="bg-white rounded-lg shadow p-4 text-left hover:shadow-md transition duration-200 relative"
+            >
+              <div className="flex items-center">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <FaEnvelope className="w-5 h-5 text-blue-600" />
+                </div>
+                <div className="ml-3">
+                  <p className="font-medium text-gray-900">Müraciətlər</p>
+                  <p className="text-sm text-gray-600">
+                    Əlaqə formasından gələn müraciətlər
+                  </p>
+                </div>
+              </div>
+              {notificationCounts.unansweredApplications > 0 && (
+                <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-6 w-6 flex items-center justify-center">
+                  {notificationCounts.unansweredApplications}
+                </div>
+              )}
             </button>
           </div>
         </div>
@@ -289,17 +335,6 @@ export default function AdminDashboard() {
                       </p>
                       <p className="text-xs text-gray-500">
                         Google Sheets-dən güncəl məlumat
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                    <div className="flex-1">
-                      <p className="text-sm text-gray-900">
-                        {userStats.working} istifadəçi ixtisasına uyğun işləyir
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        İş vəziyyəti statistikası
                       </p>
                     </div>
                   </div>

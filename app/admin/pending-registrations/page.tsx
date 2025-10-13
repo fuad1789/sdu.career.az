@@ -331,14 +331,6 @@ export default function PendingRegistrations() {
                       {selectedRegistration.specialty}
                     </p>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      İxtisasa Uyğun İşləyir
-                    </label>
-                    <p className="mt-1 text-sm text-gray-900">
-                      {selectedRegistration.workingInField}
-                    </p>
-                  </div>
                   {selectedRegistration.workField && (
                     <div>
                       <label className="block text-sm font-medium text-gray-700">
