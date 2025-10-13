@@ -44,31 +44,31 @@ export async function GET(request: NextRequest) {
           case "Timestamp":
             registration.timestamp = value;
             break;
-          case "Ad, Ata adı, Soyad:":
+          case "Ad, Ata adı, Soyad":
             registration.fullName = value;
             break;
-          case "Elektron ünvan:":
+          case "Elektron ünvan":
             registration.email = value;
             break;
-          case "Məzun olduğunuz il:":
+          case "Məzun olduğunuz il":
             registration.graduationYear = value;
             break;
-          case "Əlaqə nömrəsi:":
+          case "Əlaqə nömrəsi":
             registration.phone = value;
             break;
           case "İxtisas":
             registration.specialty = value;
             break;
-          case "İxtisasınıza uyğun işləyirsinizmi?":
+          case "İxtisasınıza uyğun işləyirsinizmi":
             registration.workingInField = value;
             break;
-          case "Hansı sahə üzrə işləyirsiniz?":
+          case "Hansı sahə üzrə işləyirsiniz":
             registration.workField = value;
             break;
           case "İş yeriniz və vəzifəniz":
             registration.workplace = value;
             break;
-          case "SDU-nun təklif etdiyi Karyera xidmətlərindən hansı sizə uyğundur?":
+          case "SDU-nun təklif etdiyi Karyera xidmətlərindən hansı sizə uyğundur":
             registration.careerServices = value;
             break;
           case "Əlavə qeydiniz":
