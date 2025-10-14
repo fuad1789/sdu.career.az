@@ -11,13 +11,33 @@ export async function GET(request: NextRequest) {
     // Initialize Google Sheets API
     const sheets = getGoogleSheets();
 
-    // Read data from Pending sheet
+    // Add cache busting and force refresh
+    const cacheBuster = Date.now();
+    console.log(
+      `[${new Date().toISOString()}] Fetching pending registrations with cache buster: ${cacheBuster}`
+    );
+
+    // Read data from Pending sheet with cache busting
+    // Use a dynamic range that includes more rows to ensure we get all data
+    const dynamicRange = `Pending!A1:K1000`; // Increased range to ensure we get all data
+    console.log(
+      `[${new Date().toISOString()}] Fetching from range: ${dynamicRange}`
+    );
+
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: SHEET_ID,
-      range: `Pending!${PENDING_RANGE}`, // Use exact sheet name
+      range: dynamicRange,
+      majorDimension: "ROWS",
+      valueRenderOption: "UNFORMATTED_VALUE",
+      dateTimeRenderOption: "FORMATTED_STRING",
     });
 
     const rows = response.data.values;
+    console.log(
+      `[${new Date().toISOString()}] Fetched ${
+        rows ? rows.length : 0
+      } rows from Google Sheets`
+    );
 
     if (!rows || rows.length <= 1) {
       return NextResponse.json({
@@ -35,6 +55,11 @@ export async function GET(request: NextRequest) {
         id: `PENDING-${index + 1}`,
         rowNumber: index + 2, // +2 because we skip header and start from 1
       };
+
+      console.log(
+        `[${new Date().toISOString()}] Processing row ${index + 2}:`,
+        row
+      );
 
       // Map each column to registration property
       headers.forEach((header, colIndex) => {
@@ -84,9 +109,17 @@ export async function GET(request: NextRequest) {
       return registration;
     });
 
+    console.log(
+      `[${new Date().toISOString()}] Returning ${
+        registrations.length
+      } registrations to client`
+    );
+
     return NextResponse.json({
       registrations,
       total: registrations.length,
+      cacheBuster: cacheBuster,
+      fetchedAt: new Date().toISOString(),
     });
   } catch (error) {
     console.error("Error fetching pending registrations:", error);

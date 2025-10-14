@@ -58,10 +58,27 @@ export default function PendingRegistrations() {
   const fetchPendingRegistrations = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/admin/pending-registrations");
+      // Add cache busting parameter
+      const cacheBuster = Date.now();
+      const response = await fetch(
+        `/api/admin/pending-registrations?t=${cacheBuster}`,
+        {
+          method: "GET",
+          headers: {
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            Pragma: "no-cache",
+            Expires: "0",
+          },
+        }
+      );
       const data = await response.json();
 
       if (response.ok) {
+        console.log(
+          `Fetched ${data.registrations?.length || 0} registrations at ${
+            data.fetchedAt
+          }`
+        );
         setPendingRegistrations(data.registrations || []);
       } else {
         console.error("Failed to fetch pending registrations:", data.error);
