@@ -11,26 +11,76 @@ export async function GET(request: NextRequest) {
     // Initialize Google Sheets API
     const sheets = getGoogleSheets();
 
-    // Add cache busting and force refresh
+    // Add aggressive cache busting and force refresh
     const cacheBuster = Date.now();
+    const randomId = Math.random().toString(36).substring(7);
     console.log(
-      `[${new Date().toISOString()}] Fetching pending registrations with cache buster: ${cacheBuster}`
+      `[${new Date().toISOString()}] Fetching pending registrations with cache buster: ${cacheBuster}, randomId: ${randomId}`
     );
 
-    // Read data from Pending sheet with cache busting
-    // Use a dynamic range that includes more rows to ensure we get all data
-    const dynamicRange = `Pending!A1:K1000`; // Increased range to ensure we get all data
-    console.log(
-      `[${new Date().toISOString()}] Fetching from range: ${dynamicRange}`
-    );
+    // Try multiple approaches to get fresh data
+    let response;
+    let attempts = 0;
+    const maxAttempts = 3;
 
-    const response = await sheets.spreadsheets.values.get({
-      spreadsheetId: SHEET_ID,
-      range: dynamicRange,
-      majorDimension: "ROWS",
-      valueRenderOption: "UNFORMATTED_VALUE",
-      dateTimeRenderOption: "FORMATTED_STRING",
-    });
+    while (attempts < maxAttempts) {
+      try {
+        attempts++;
+        console.log(
+          `[${new Date().toISOString()}] Attempt ${attempts}/${maxAttempts} to fetch data`
+        );
+
+        // Use different approaches for each attempt
+        const dynamicRange =
+          attempts === 1
+            ? `Pending!A1:K1000`
+            : attempts === 2
+            ? `Pending!A:K`
+            : `Pending!A1:Z1000`; // Even wider range on last attempt
+
+        console.log(
+          `[${new Date().toISOString()}] Attempt ${attempts} - Fetching from range: ${dynamicRange}`
+        );
+
+        response = await sheets.spreadsheets.values.get(
+          {
+            spreadsheetId: SHEET_ID,
+            range: dynamicRange,
+            majorDimension: "ROWS",
+            valueRenderOption: "UNFORMATTED_VALUE",
+            dateTimeRenderOption: "FORMATTED_STRING",
+          },
+          {
+            // Add request-level cache busting
+            headers: {
+              "Cache-Control": "no-cache, no-store, must-revalidate",
+              Pragma: "no-cache",
+              Expires: "0",
+              "If-None-Match": `"${cacheBuster}-${randomId}"`,
+              "If-Modified-Since": new Date(0).toUTCString(),
+            },
+          }
+        );
+
+        // If we got data, break out of retry loop
+        if (response.data.values && response.data.values.length > 0) {
+          console.log(
+            `[${new Date().toISOString()}] Successfully fetched data on attempt ${attempts}`
+          );
+          break;
+        }
+      } catch (error) {
+        console.error(
+          `[${new Date().toISOString()}] Attempt ${attempts} failed:`,
+          error
+        );
+        if (attempts === maxAttempts) {
+          throw error;
+        }
+        // Wait a bit before retry
+        await new Promise((resolve) => setTimeout(resolve, 1000 * attempts));
+      }
+    }
 
     const rows = response.data.values;
     console.log(
@@ -115,12 +165,27 @@ export async function GET(request: NextRequest) {
       } registrations to client`
     );
 
-    return NextResponse.json({
+    // Add additional cache busting headers to response
+    const response = NextResponse.json({
       registrations,
       total: registrations.length,
       cacheBuster: cacheBuster,
+      randomId: randomId,
       fetchedAt: new Date().toISOString(),
+      attempts: attempts,
     });
+
+    // Set aggressive cache control headers
+    response.headers.set(
+      "Cache-Control",
+      "no-cache, no-store, must-revalidate, max-age=0"
+    );
+    response.headers.set("Pragma", "no-cache");
+    response.headers.set("Expires", "0");
+    response.headers.set("Last-Modified", new Date().toUTCString());
+    response.headers.set("ETag", `"${cacheBuster}-${randomId}"`);
+
+    return response;
   } catch (error) {
     console.error("Error fetching pending registrations:", error);
     return NextResponse.json(
