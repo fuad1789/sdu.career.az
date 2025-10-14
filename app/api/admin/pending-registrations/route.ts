@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
     );
 
     // Try multiple approaches to get fresh data
-    let response;
+    let sheetsResponse;
     let attempts = 0;
     const maxAttempts = 3;
 
@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
           `[${new Date().toISOString()}] Attempt ${attempts} - Fetching from range: ${dynamicRange}`
         );
 
-        response = await sheets.spreadsheets.values.get(
+        sheetsResponse = await sheets.spreadsheets.values.get(
           {
             spreadsheetId: SHEET_ID,
             range: dynamicRange,
@@ -63,7 +63,7 @@ export async function GET(request: NextRequest) {
         );
 
         // If we got data, break out of retry loop
-        if (response.data.values && response.data.values.length > 0) {
+        if (sheetsResponse.data.values && sheetsResponse.data.values.length > 0) {
           console.log(
             `[${new Date().toISOString()}] Successfully fetched data on attempt ${attempts}`
           );
@@ -82,7 +82,17 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const rows = response.data.values;
+    // Check if we got a valid response
+    if (!sheetsResponse || !sheetsResponse.data) {
+      console.error(`[${new Date().toISOString()}] No valid response from Google Sheets after ${attempts} attempts`);
+      return NextResponse.json({
+        registrations: [],
+        total: 0,
+        error: "Failed to fetch data from Google Sheets"
+      });
+    }
+
+    const rows = sheetsResponse.data.values;
     console.log(
       `[${new Date().toISOString()}] Fetched ${
         rows ? rows.length : 0
@@ -166,7 +176,7 @@ export async function GET(request: NextRequest) {
     );
 
     // Add additional cache busting headers to response
-    const response = NextResponse.json({
+    const apiResponse = NextResponse.json({
       registrations,
       total: registrations.length,
       cacheBuster: cacheBuster,
@@ -176,16 +186,16 @@ export async function GET(request: NextRequest) {
     });
 
     // Set aggressive cache control headers
-    response.headers.set(
+    apiResponse.headers.set(
       "Cache-Control",
       "no-cache, no-store, must-revalidate, max-age=0"
     );
-    response.headers.set("Pragma", "no-cache");
-    response.headers.set("Expires", "0");
-    response.headers.set("Last-Modified", new Date().toUTCString());
-    response.headers.set("ETag", `"${cacheBuster}-${randomId}"`);
+    apiResponse.headers.set("Pragma", "no-cache");
+    apiResponse.headers.set("Expires", "0");
+    apiResponse.headers.set("Last-Modified", new Date().toUTCString());
+    apiResponse.headers.set("ETag", `"${cacheBuster}-${randomId}"`);
 
-    return response;
+    return apiResponse;
   } catch (error) {
     console.error("Error fetching pending registrations:", error);
     return NextResponse.json(
