@@ -8,20 +8,27 @@ const PENDING_RANGE = "A:K";
 
 export async function GET(request: NextRequest) {
   try {
+    // Get force refresh parameter from query string
+    const { searchParams } = new URL(request.url);
+    const forceRefresh = searchParams.get("force") === "true";
+    const bypassCache = searchParams.get("bypass") === "true";
+
     // Initialize Google Sheets API
     const sheets = getGoogleSheets();
 
     // Add aggressive cache busting and force refresh
     const cacheBuster = Date.now();
     const randomId = Math.random().toString(36).substring(7);
+    const sessionId = Math.random().toString(36).substring(2, 15);
+
     console.log(
-      `[${new Date().toISOString()}] Fetching pending registrations with cache buster: ${cacheBuster}, randomId: ${randomId}`
+      `[${new Date().toISOString()}] Fetching pending registrations - forceRefresh: ${forceRefresh}, bypassCache: ${bypassCache}, cacheBuster: ${cacheBuster}, randomId: ${randomId}, sessionId: ${sessionId}`
     );
 
     // Try multiple approaches to get fresh data
     let sheetsResponse;
     let attempts = 0;
-    const maxAttempts = 3;
+    const maxAttempts = bypassCache ? 5 : 3;
 
     while (attempts < maxAttempts) {
       try {
@@ -30,42 +37,57 @@ export async function GET(request: NextRequest) {
           `[${new Date().toISOString()}] Attempt ${attempts}/${maxAttempts} to fetch data`
         );
 
-        // Use different approaches for each attempt
-        const dynamicRange =
-          attempts === 1
-            ? `Pending!A1:K1000`
-            : attempts === 2
-            ? `Pending!A:K`
-            : `Pending!A1:Z1000`; // Even wider range on last attempt
+        // Use different approaches for each attempt with more aggressive cache busting
+        const dynamicRange = bypassCache
+          ? `Pending!A1:Z2000` // Even wider range for bypass
+          : attempts === 1
+          ? `Pending!A1:K1000`
+          : attempts === 2
+          ? `Pending!A:K`
+          : `Pending!A1:Z1000`;
 
         console.log(
           `[${new Date().toISOString()}] Attempt ${attempts} - Fetching from range: ${dynamicRange}`
         );
 
-        sheetsResponse = await sheets.spreadsheets.values.get(
-          {
-            spreadsheetId: SHEET_ID,
-            range: dynamicRange,
-            majorDimension: "ROWS",
-            valueRenderOption: "UNFORMATTED_VALUE",
-            dateTimeRenderOption: "FORMATTED_STRING",
+        // Create unique request parameters for each attempt
+        const requestParams = {
+          spreadsheetId: SHEET_ID,
+          range: dynamicRange,
+          majorDimension: "ROWS",
+          valueRenderOption: "UNFORMATTED_VALUE",
+          dateTimeRenderOption: "FORMATTED_STRING",
+        };
+
+        // Add unique parameters to force cache bust
+        if (forceRefresh || bypassCache) {
+          requestParams.range = `${dynamicRange}?t=${cacheBuster}&s=${sessionId}&a=${attempts}`;
+        }
+
+        sheetsResponse = await sheets.spreadsheets.values.get(requestParams, {
+          // Add aggressive request-level cache busting
+          headers: {
+            "Cache-Control": "no-cache, no-store, must-revalidate, max-age=0",
+            Pragma: "no-cache",
+            Expires: "0",
+            "If-None-Match": `"${cacheBuster}-${randomId}-${sessionId}-${attempts}"`,
+            "If-Modified-Since": new Date(0).toUTCString(),
+            "X-Request-ID": `${cacheBuster}-${randomId}-${sessionId}`,
+            "X-Cache-Buster": cacheBuster.toString(),
+            "X-Session-ID": sessionId,
+            "X-Attempt": attempts.toString(),
           },
-          {
-            // Add request-level cache busting
-            headers: {
-              "Cache-Control": "no-cache, no-store, must-revalidate",
-              Pragma: "no-cache",
-              Expires: "0",
-              "If-None-Match": `"${cacheBuster}-${randomId}"`,
-              "If-Modified-Since": new Date(0).toUTCString(),
-            },
-          }
-        );
+        });
 
         // If we got data, break out of retry loop
-        if (sheetsResponse.data.values && sheetsResponse.data.values.length > 0) {
+        if (
+          sheetsResponse.data.values &&
+          sheetsResponse.data.values.length > 0
+        ) {
           console.log(
-            `[${new Date().toISOString()}] Successfully fetched data on attempt ${attempts}`
+            `[${new Date().toISOString()}] Successfully fetched data on attempt ${attempts} - ${
+              sheetsResponse.data.values.length
+            } rows`
           );
           break;
         }
@@ -77,18 +99,21 @@ export async function GET(request: NextRequest) {
         if (attempts === maxAttempts) {
           throw error;
         }
-        // Wait a bit before retry
-        await new Promise((resolve) => setTimeout(resolve, 1000 * attempts));
+        // Wait longer between retries for production
+        const waitTime = bypassCache ? 2000 * attempts : 1000 * attempts;
+        await new Promise((resolve) => setTimeout(resolve, waitTime));
       }
     }
 
     // Check if we got a valid response
     if (!sheetsResponse || !sheetsResponse.data) {
-      console.error(`[${new Date().toISOString()}] No valid response from Google Sheets after ${attempts} attempts`);
+      console.error(
+        `[${new Date().toISOString()}] No valid response from Google Sheets after ${attempts} attempts`
+      );
       return NextResponse.json({
         registrations: [],
         total: 0,
-        error: "Failed to fetch data from Google Sheets"
+        error: "Failed to fetch data from Google Sheets",
       });
     }
 

@@ -55,29 +55,53 @@ export default function PendingRegistrations() {
     }
   };
 
-  const fetchPendingRegistrations = async () => {
+  const fetchPendingRegistrations = async (forceRefresh = false) => {
     try {
       setLoading(true);
-      // Add cache busting parameter
+      // Add aggressive cache busting parameters
       const cacheBuster = Date.now();
-      const response = await fetch(
-        `/api/admin/pending-registrations?t=${cacheBuster}`,
-        {
-          method: "GET",
-          headers: {
-            "Cache-Control": "no-cache, no-store, must-revalidate",
-            Pragma: "no-cache",
-            Expires: "0",
-          },
-        }
+      const randomId = Math.random().toString(36).substring(7);
+      const sessionId = Math.random().toString(36).substring(2, 15);
+
+      // Build URL with multiple cache busting parameters
+      const url = new URL(
+        "/api/admin/pending-registrations",
+        window.location.origin
       );
+      url.searchParams.set("t", cacheBuster.toString());
+      url.searchParams.set("r", randomId);
+      url.searchParams.set("s", sessionId);
+      url.searchParams.set("v", Date.now().toString());
+
+      if (forceRefresh) {
+        url.searchParams.set("force", "true");
+        url.searchParams.set("bypass", "true");
+      }
+
+      console.log(
+        `[${new Date().toISOString()}] Fetching with URL: ${url.toString()}`
+      );
+
+      const response = await fetch(url.toString(), {
+        method: "GET",
+        headers: {
+          "Cache-Control": "no-cache, no-store, must-revalidate, max-age=0",
+          Pragma: "no-cache",
+          Expires: "0",
+          "X-Request-ID": `${cacheBuster}-${randomId}`,
+          "X-Session-ID": sessionId,
+          "X-Force-Refresh": forceRefresh.toString(),
+        },
+      });
       const data = await response.json();
 
       if (response.ok) {
         console.log(
-          `Fetched ${data.registrations?.length || 0} registrations at ${
-            data.fetchedAt
-          }`
+          `[${new Date().toISOString()}] Fetched ${
+            data.registrations?.length || 0
+          } registrations at ${data.fetchedAt} (attempts: ${
+            data.attempts
+          }, cacheBuster: ${data.cacheBuster})`
         );
         setPendingRegistrations(data.registrations || []);
       } else {
@@ -190,7 +214,7 @@ export default function PendingRegistrations() {
             </div>
             <div className="flex items-center space-x-4">
               <button
-                onClick={() => fetchPendingRegistrations()}
+                onClick={() => fetchPendingRegistrations(false)}
                 disabled={loading}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center disabled:opacity-50"
               >
@@ -212,6 +236,30 @@ export default function PendingRegistrations() {
                   </svg>
                 )}
                 Yenilə
+              </button>
+              <button
+                onClick={() => fetchPendingRegistrations(true)}
+                disabled={loading}
+                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center disabled:opacity-50"
+              >
+                {loading ? (
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                ) : (
+                  <svg
+                    className="w-4 h-4 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    />
+                  </svg>
+                )}
+                Force Yenilə
               </button>
               <button
                 onClick={() => router.push("/admin/dashboard")}
