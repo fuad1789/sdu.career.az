@@ -37,22 +37,10 @@ export default function Header() {
           {/* Desktop Navigation - Hidden on mobile and tablet */}
           <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
             <Link
-              href="/tecrube"
+              href="/merkez-haqqinda"
               className="text-gray-700 hover:text-sdu-blue transition-colors whitespace-nowrap"
             >
-              Təcrübə İmkanları
-            </Link>
-            <Link
-              href="/karyera"
-              className="text-gray-700 hover:text-sdu-blue transition-colors whitespace-nowrap"
-            >
-              Karyera İmkanları
-            </Link>
-            <Link
-              href="/elanlar"
-              className="text-gray-700 hover:text-sdu-blue transition-colors whitespace-nowrap"
-            >
-              Elanlar
+              Mərkəz Haqqında
             </Link>
             <Link
               href="/elaqe"

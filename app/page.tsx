@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import LatestAnnouncements from "@/components/LatestAnnouncements";
 import StatsSection from "@/components/StatsSection";
 import FeaturesSection from "@/components/FeaturesSection";
+import PartnersSection from "@/components/PartnersSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 // import NewsSection from "@/components/NewsSection";
 import GraduateSearch from "@/components/GraduateSearch";
@@ -63,6 +64,7 @@ export default async function Home() {
       <LatestAnnouncements announcements={announcements} />
       <StatsSection />
       <FeaturesSection />
+      <PartnersSection />
       <TestimonialsSection />
       {/* <NewsSection /> */}
       <Footer />

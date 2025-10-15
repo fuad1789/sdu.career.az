@@ -38,7 +38,12 @@ export default function Navigation() {
     },
     {
       title: "Əsasnamə",
-      href: "/esasname",
+      href: "/Əsasnamə_k_m.pdf",
+      subItems: [],
+    },
+    {
+      title: "Tələbənin Karyera Yol Xəritəsi",
+      href: "/SDU_KARYERA_XERITESI.pdf",
       subItems: [],
     },
     {

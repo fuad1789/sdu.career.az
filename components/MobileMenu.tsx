@@ -47,7 +47,12 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     },
     {
       title: "Əsasnamə",
-      href: "/esasname",
+      href: "/Əsasnamə_k_m.pdf",
+      subItems: [],
+    },
+    {
+      title: "Tələbənin Karyera Yol Xəritəsi",
+      href: "/SDU_KARYERA_XERITESI.pdf",
       subItems: [],
     },
     {

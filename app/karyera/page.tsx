@@ -133,45 +133,6 @@ export default function KaryeraPage() {
               təcrübəsini təşkil etməli, məzunlara işə düzəlməkdə dəstək
               göstərməlidir.
             </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mt-8 sm:mt-12">
-              <div className="bg-white bg-opacity-10 rounded-lg p-4 sm:p-6">
-                <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
-                  Məqsəd
-                </h3>
-                <p className="text-blue-100 text-sm sm:text-base">
-                  Gənclərin bilik, praktiki bacarıq və vərdişlərinin
-                  artırılması, onların məşğulluq problemlərinin həll edilməsi
-                  üzrə kompleks təşkilati, texniki, informasiya, məsləhət,
-                  tədris və maarifləndirmə tədbirlərinin həyata keçirilməsidir.
-                </p>
-              </div>
-
-              <div className="bg-white bg-opacity-10 rounded-lg p-4 sm:p-6">
-                <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
-                  Fəaliyyət
-                </h3>
-                <p className="text-blue-100 text-sm sm:text-base">
-                  Yerli və beynəlxalq şirkətlərlə, dövlət müəssisələri ilə
-                  əməkdaşlıq etməkdən ibarətdir. Universitetə sənaye
-                  müəsissələrindən və uğurlu SDU məzunlarından nümayəndələrin
-                  dəvət edilməsi, tələbələrlə müxtəlif görüşlərin təşkil
-                  olunması istiqaməti Mərkəzin əsas fəaliyyətlərindən sayılır.
-                </p>
-              </div>
-
-              <div className="bg-white bg-opacity-10 rounded-lg p-4 sm:p-6">
-                <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
-                  Dəstək
-                </h3>
-                <p className="text-blue-100 text-sm sm:text-base">
-                  Təhsilalanların qısa və uzunmüddətli kurslara və təlim
-                  proqramlarına cəlb olunmasına, Karyeraya dair tədbirlərin
-                  keçirilməsinə, məzunların ixtisaslarına uyğun iş imkanlarının
-                  müəyyən edilməsinə dəstək göstərir.
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </section>

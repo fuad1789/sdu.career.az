@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import Image from "next/image";
 
 export default function EmekdaslarPage() {
   const emekdaslar = [
@@ -61,13 +62,14 @@ export default function EmekdaslarPage() {
                     {/* Sol tərəf - Şəxsi məlumatlar */}
                     <div className="lg:w-1/3">
                       <div className="text-center lg:text-left">
-                        <div className="w-32 h-32 bg-sdu-blue rounded-full mx-auto lg:mx-0 mb-6 flex items-center justify-center">
-                          <span className="text-4xl text-white font-bold">
-                            {emekdas.name
-                              .split(" ")
-                              .map((n) => n[0])
-                              .join("")}
-                          </span>
+                        <div className="w-32 h-32 rounded-full mx-auto lg:mx-0 mb-6 overflow-hidden">
+                          <Image
+                            src="/images/anar-dunyamaliyev.jpg"
+                            alt={emekdas.name}
+                            width={128}
+                            height={128}
+                            className="w-full h-full object-cover"
+                          />
                         </div>
                         <h2 className="text-2xl font-bold text-gray-900 mb-2">
                           {emekdas.name}
