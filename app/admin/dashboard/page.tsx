@@ -11,6 +11,7 @@ import {
   FaChartBar,
   FaSignOutAlt,
   FaEnvelope,
+  FaSuitcase,
 } from "react-icons/fa";
 
 export default function AdminDashboard() {
@@ -19,6 +20,11 @@ export default function AdminDashboard() {
     total: 0,
     recentGraduates: 0,
     careerServices: 0,
+  });
+  const [vacancyStats, setVacancyStats] = useState({
+    total: 0,
+    active: 0,
+    inactive: 0,
   });
   const [notificationCounts, setNotificationCounts] = useState({
     pendingRegistrations: 0,
@@ -42,6 +48,7 @@ export default function AdminDashboard() {
       if (response.ok) {
         setIsAuthenticated(true);
         fetchUserStats();
+        fetchVacancyStats();
         fetchNotificationCounts();
       } else {
         router.push("/admin/login");
@@ -85,6 +92,31 @@ export default function AdminDashboard() {
       console.error("Error fetching user stats:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchVacancyStats = async () => {
+    try {
+      const response = await fetch("/api/vakansiyalar");
+      const data = await response.json();
+
+      if (response.ok) {
+        const vacancies = data.vacancies || [];
+        const active = vacancies.filter(
+          (v: any) => v.status === "Aktiv"
+        ).length;
+        const inactive = vacancies.filter(
+          (v: any) => v.status !== "Aktiv"
+        ).length;
+
+        setVacancyStats({
+          total: vacancies.length,
+          active,
+          inactive,
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching vacancy stats:", error);
     }
   };
 
@@ -225,6 +257,22 @@ export default function AdminDashboard() {
               </div>
             </div>
           </div>
+
+          <div className="bg-white rounded-lg shadow p-6">
+            <div className="flex items-center">
+              <div className="p-2 bg-green-100 rounded-lg">
+                <FaSuitcase className="w-6 h-6 text-green-600" />
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-600">
+                  Aktiv Vakansiyalar
+                </p>
+                <p className="text-2xl font-semibold text-gray-900">
+                  {loading ? "..." : vacancyStats.active}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Quick Actions */}
@@ -309,6 +357,23 @@ export default function AdminDashboard() {
                   {notificationCounts.unansweredApplications}
                 </div>
               )}
+            </button>
+
+            <button
+              onClick={() => router.push("/admin/vakansiyalar")}
+              className="bg-white rounded-lg shadow p-4 text-left hover:shadow-md transition duration-200"
+            >
+              <div className="flex items-center">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <FaSuitcase className="w-5 h-5 text-green-600" />
+                </div>
+                <div className="ml-3">
+                  <p className="font-medium text-gray-900">Vakansiyalar</p>
+                  <p className="text-sm text-gray-600">
+                    Vakansiyaları idarə et
+                  </p>
+                </div>
+              </div>
             </button>
           </div>
         </div>

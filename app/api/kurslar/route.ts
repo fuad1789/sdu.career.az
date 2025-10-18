@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getGoogleSheets } from "@/lib/google-sheets-auth";
 
+// Force dynamic rendering for this route since it uses search parameters
+export const dynamic = "force-dynamic";
+
 // Google Sheets configuration
 const SHEET_ID = process.env.GOOGLE_SHEETS_SHEET_ID!;
 const SHEET_NAME = "kurslar"; // Worksheet name
@@ -26,7 +29,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get query parameters
-    const { searchParams } = new URL(request.url);
+    const searchParams = request.nextUrl.searchParams;
     const level = searchParams.get("level") || "";
     const limit = parseInt(searchParams.get("limit") || "0");
 

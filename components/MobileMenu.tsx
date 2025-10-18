@@ -52,7 +52,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     },
     {
       title: "Tələbənin Karyera Yol Xəritəsi",
-      href: "/SDU_KARYERA_XERITESI.pdf",
+      href: "/SDU_KARYERA_XERITESI_CORRECT.pdf",
       subItems: [],
     },
     {
@@ -105,6 +105,17 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 onClick={onClose}
               >
                 Məzun Qeydiyatı
+              </Link>
+            </div>
+
+            {/* Vakansiyalar Link */}
+            <div className="mb-4">
+              <Link
+                href="/karyera/vakansiyalar"
+                className="block py-2 text-gray-700 hover:text-sdu-blue font-medium"
+                onClick={onClose}
+              >
+                Vakansiyalar
               </Link>
             </div>
 

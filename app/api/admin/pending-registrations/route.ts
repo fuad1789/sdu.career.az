@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getGoogleSheets } from "@/lib/google-sheets-auth";
 
+// Force dynamic rendering for this route since it uses search parameters
+export const dynamic = "force-dynamic";
+
 // Google Sheets configuration
 const SHEET_ID = process.env.GOOGLE_SHEETS_SHEET_ID!;
 const PENDING_SHEET_NAME = "Pending";
@@ -9,7 +12,7 @@ const PENDING_RANGE = "A:K";
 export async function GET(request: NextRequest) {
   try {
     // Get force refresh parameter from query string
-    const { searchParams } = new URL(request.url);
+    const searchParams = request.nextUrl.searchParams;
     const forceRefresh = searchParams.get("force") === "true";
     const bypassCache = searchParams.get("bypass") === "true";
 

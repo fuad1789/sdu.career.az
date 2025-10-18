@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getGoogleSheets } from "@/lib/google-sheets-auth";
 
+// Force dynamic rendering for this route since it uses search parameters
+export const dynamic = "force-dynamic";
+
 // Google Sheets configuration
 const SHEET_ID = process.env.GOOGLE_SHEETS_SHEET_ID!;
 const SHEET_NAME = "tedbirler"; // Worksheet name for events - make sure this sheet exists in your Google Sheet
@@ -9,7 +12,7 @@ const RANGE = "A:I"; // Columns A to I (ID, Başlıq, Tarix, Saat, Katiqorya, M�
 export async function GET(request: NextRequest) {
   try {
     // Get query parameters
-    const { searchParams } = new URL(request.url);
+    const searchParams = request.nextUrl.searchParams;
     const category = searchParams.get("category") || "";
     const status = searchParams.get("status") || "upcoming"; // upcoming, past, all
     const limit = parseInt(searchParams.get("limit") || "0");

@@ -24,8 +24,8 @@ export default function EmekdaslarPage() {
         "British Council – Creative Spark layihəsi",
         "Erasmus PETRA layihəsi – Tədqiqat bacarıqlarının inkişaf etdirilməsi",
       ],
-      email: "anar.dunyamaliyev@sdu.edu.az",
-      phone: "+994 (018)-646-20-33",
+      email: "anarahmedoglu@sdu.edu.az",
+      phone: "+994 (50) 566 88 88",
     },
   ];
 

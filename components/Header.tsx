@@ -49,10 +49,16 @@ export default function Header() {
               Əlaqə
             </Link>
             <Link
+              href="/karyera/vakansiyalar"
+              className="text-gray-700 hover:text-sdu-blue transition-colors whitespace-nowrap"
+            >
+              Vakansiyalar
+            </Link>
+            <Link
               href="/mezun-qeydiyyati"
               className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg whitespace-nowrap"
             >
-              Mezun Qeydiyatı
+              Məzun Qeydiyatı
             </Link>
           </nav>
 

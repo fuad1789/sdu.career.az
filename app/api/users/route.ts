@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import Fuse from "fuse.js";
 import { getGoogleSheets } from "@/lib/google-sheets-auth";
 
+// Force dynamic rendering for this route since it uses search parameters
+export const dynamic = "force-dynamic";
+
 // Google Sheets configuration
 const SHEET_ID = process.env.GOOGLE_SHEETS_SHEET_ID!;
 const SHEET_NAME = "Main"; // Worksheet name
@@ -10,7 +13,7 @@ const RANGE = "A:K"; // Columns A to K
 export async function GET(request: NextRequest) {
   try {
     // Get pagination parameters from URL
-    const { searchParams } = new URL(request.url);
+    const searchParams = request.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "20");
     const search = searchParams.get("search") || "";

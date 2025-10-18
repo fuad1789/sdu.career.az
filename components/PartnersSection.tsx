@@ -52,6 +52,11 @@ export default function PartnersSection() {
       logo: "/images/logo/logo.svg",
       alt: "SDU Logo",
     },
+    {
+      name: "IYDE Logo",
+      logo: "/images/logo/iyde.svg",
+      alt: "IYDE Logo",
+    },
   ];
 
   return (
@@ -72,7 +77,7 @@ export default function PartnersSection() {
             spaceBetween={20}
             slidesPerView={6}
             autoplay={{
-              delay: 2000,
+              delay: 700,
               disableOnInteraction: false,
             }}
             loop={true}

@@ -43,7 +43,7 @@ export default function Navigation() {
     },
     {
       title: "Tələbənin Karyera Yol Xəritəsi",
-      href: "/SDU_KARYERA_XERITESI.pdf",
+      href: "/SDU_KARYERA_XERITESI_CORRECT.pdf",
       subItems: [],
     },
     {
