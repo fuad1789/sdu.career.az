@@ -28,7 +28,7 @@ async function getAnnouncements(): Promise<Announcement[]> {
         : "http://localhost:3000");
 
     const response = await fetch(`${baseUrl}/api/elanlar`, {
-      next: { revalidate: 300 }, // Revalidate every 5 minutes
+      cache: "no-store", // Always fetch fresh data
     });
 
     if (!response.ok) {

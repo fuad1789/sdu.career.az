@@ -1,5 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import { FaGraduationCap, FaBriefcase, FaHandshake } from "react-icons/fa";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 interface Announcement {
   title: string;
@@ -40,42 +49,71 @@ export default function LatestAnnouncements({
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          spaceBetween={30}
+          slidesPerView={1}
+          breakpoints={{
+            640: {
+              slidesPerView: 2,
+              spaceBetween: 20,
+            },
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: 30,
+            },
+          }}
+          navigation={true}
+          pagination={{ clickable: true }}
+          autoplay={{
+            delay: 6000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          }}
+          loop={announcements.length >= 3}
+          className="mySwiper"
+        >
           {announcements.map((announcement, index) => {
             const IconComponent = getCategoryIcon(announcement.category);
             return (
-              <div
-                key={index}
-                className="group bg-white rounded-xl sm:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 p-4 sm:p-6 lg:p-8 border border-gray-100 relative overflow-hidden"
-              >
-                {/* Gradient overlay */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-sdu-blue to-blue-600"></div>
+              <SwiperSlide key={index} className="h-auto">
+                <div className="group bg-white rounded-xl sm:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 p-6 sm:p-8 border border-gray-100 relative overflow-hidden flex flex-col h-full hover:border-sdu-blue">
+                  {/* Gradient overlay */}
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-sdu-blue to-blue-600"></div>
 
-                {/* Icon and date */}
-                <div className="flex items-center justify-between mb-4 sm:mb-6">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-sdu-blue to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                  </div>
-                  <div className="text-right">
-                    <span className="text-xs sm:text-sm text-gray-500 font-medium">
-                      {new Date(announcement.date).toLocaleDateString("az-AZ")}
-                    </span>
+                  {/* Animated background gradient on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
+                  <div className="relative z-10">
+                    {/* Icon and date */}
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-sdu-blue to-blue-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <IconComponent className="w-6 h-6 text-white" />
+                      </div>
+                      <div className="text-right">
+                        <span className="text-sm text-gray-500 font-medium">
+                          {new Date(announcement.date).toLocaleDateString(
+                            "az-AZ"
+                          )}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Title with line clamp - never changes */}
+                    <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-sdu-blue transition-colors duration-300 line-clamp-2">
+                      {announcement.title}
+                    </h3>
+
+                    {/* Description with more lines - auto height */}
+                    <p className="text-gray-600 text-base leading-relaxed line-clamp-6">
+                      {announcement.description}
+                    </p>
                   </div>
                 </div>
-
-                {/* Title with better typography */}
-                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight group-hover:text-sdu-blue transition-colors duration-300">
-                  {announcement.title}
-                </h3>
-
-                {/* Description with improved spacing */}
-                <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                  {announcement.description}
-                </p>
-              </div>
+              </SwiperSlide>
             );
           })}
-        </div>
+        </Swiper>
 
         <div className="text-center mt-8 sm:mt-12 lg:mt-16">
           <Link

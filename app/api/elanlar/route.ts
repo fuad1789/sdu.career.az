@@ -56,56 +56,69 @@ export async function GET(request: NextRequest) {
     const headers = rows[0];
 
     // Map data rows to announcement objects
-    const allAnnouncements = rows.slice(1).map((row, index) => {
-      const announcement: any = {
-        id: index + 1,
-        rowNumber: index + 2, // +2 because we skip header and start from 1
-      };
+    const allAnnouncements = rows
+      .slice(1)
+      .map((row, index) => {
+        const announcement: any = {
+          id: index + 1,
+          rowNumber: index + 2, // +2 because we skip header and start from 1
+        };
 
-      // Map each column to announcement property
-      headers.forEach((header, colIndex) => {
-        const value = row[colIndex] || "";
+        // Map each column to announcement property
+        headers.forEach((header, colIndex) => {
+          const value = row[colIndex] || "";
 
-        switch (header) {
-          case "ID":
-            announcement.id = value;
-            break;
-          case "Başlıq":
-            announcement.title = value;
-            break;
-          case "Təsvir":
-            announcement.description = value;
-            break;
-          case "Kateqoriya":
-            announcement.category = value;
-            break;
-          case "Tarix":
-            // Convert DD.MM.YYYY to YYYY-MM-DD format
-            if (value && value.includes(".")) {
-              const [day, month, year] = value.split(".");
-              announcement.date = `${year}-${month.padStart(
-                2,
-                "0"
-              )}-${day.padStart(2, "0")}`;
-            } else {
-              announcement.date = value;
-            }
-            break;
-          case "Status":
-            announcement.status = value;
-            break;
-          case "Prioritet":
-            announcement.priority = value;
-            break;
-          default:
-            // For any other columns, use the header as key
-            announcement[header.toLowerCase().replace(/[^a-z0-9]/g, "_")] =
-              value;
+          switch (header) {
+            case "ID":
+              announcement.id = value;
+              break;
+            case "Başlıq":
+              announcement.title = value;
+              break;
+            case "Təsvir":
+              announcement.description = value;
+              break;
+            case "Kateqoriya":
+              announcement.category = value;
+              break;
+            case "Tarix":
+              // Convert DD.MM.YYYY to YYYY-MM-DD format
+              if (value && value.includes(".")) {
+                const [day, month, year] = value.split(".");
+                announcement.date = `${year}-${month.padStart(
+                  2,
+                  "0"
+                )}-${day.padStart(2, "0")}`;
+              } else {
+                announcement.date = value;
+              }
+              break;
+            case "Status":
+              announcement.status = value;
+              break;
+            case "Prioritet":
+              announcement.priority = value;
+              break;
+            default:
+              // For any other columns, use the header as key
+              announcement[header.toLowerCase().replace(/[^a-z0-9]/g, "_")] =
+                value;
+          }
+        });
+
+        return announcement;
+      })
+      .filter((announcement) => {
+        // Filter out entries without a title (empty rows)
+        return announcement.title && announcement.title.trim() !== "";
+      })
+      .map((announcement, index) => {
+        // Ensure each announcement has a unique ID
+        if (!announcement.id || announcement.id === index + 1) {
+          announcement.id = `row_${announcement.rowNumber}_${index}`;
         }
+        return announcement;
       });
-
-      return announcement;
-    });
 
     // Filter by status (default: only active announcements)
     let filteredAnnouncements = allAnnouncements.filter(
@@ -130,6 +143,11 @@ export async function GET(request: NextRequest) {
     if (limit > 0) {
       filteredAnnouncements = filteredAnnouncements.slice(0, limit);
     }
+
+    // Log for debugging
+    console.log(
+      `Found ${allAnnouncements.length} total announcements, ${filteredAnnouncements.length} after filtering`
+    );
 
     return NextResponse.json({
       announcements: filteredAnnouncements,

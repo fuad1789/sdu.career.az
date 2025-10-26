@@ -35,8 +35,8 @@ async function getLatestAnnouncements(): Promise<Announcement[]> {
         ? "https://sdu-career-az.vercel.app"
         : "http://localhost:3000");
 
-    const response = await fetch(`${baseUrl}/api/elanlar?limit=3`, {
-      next: { revalidate: 300 }, // Revalidate every 5 minutes
+    const response = await fetch(`${baseUrl}/api/elanlar`, {
+      cache: "no-store", // Always fetch fresh data
     });
 
     if (!response.ok) {
@@ -44,7 +44,21 @@ async function getLatestAnnouncements(): Promise<Announcement[]> {
     }
 
     const data: AnnouncementsResponse = await response.json();
-    return data.announcements.slice(0, 3); // Get only first 3 for homepage
+
+    // Filter only high priority (yüksək) announcements
+    // Normalize priority to handle different variants
+    const highPriorityAnnouncements = data.announcements.filter(
+      (announcement) => {
+        if (!announcement.priority) return false;
+        const normalizedPriority = announcement.priority
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, ""); // Remove diacritics
+        return normalizedPriority.includes("yuks"); // Check for yuks (yüksək)
+      }
+    );
+
+    return highPriorityAnnouncements; // Return all high priority announcements
   } catch (error) {
     console.error("Error fetching announcements:", error);
     // Return empty array as fallback
