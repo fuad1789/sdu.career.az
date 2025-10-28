@@ -65,7 +65,7 @@ export default function Footer() {
                   href="/elanlar"
                   className="text-gray-400 hover:text-white transition-colors text-sm block py-1"
                 >
-                  Elanlar
+                  Xəbərlər
                 </Link>
               </li>
               <li>

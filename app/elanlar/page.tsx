@@ -10,6 +10,7 @@ interface Announcement {
   date: string;
   status: string;
   priority: string;
+  link_url?: string;
 }
 
 interface AnnouncementsResponse {
@@ -57,7 +58,7 @@ export default async function ElanlarPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">
-              Elanlar
+              Xəbərlər
             </h1>
             <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto px-4">
               Karyera və Məzunlarla İş Mərkəzinin ən son elanları və xəbərləri
@@ -91,6 +92,16 @@ export default async function ElanlarPage() {
                     <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
                       {elan.description}
                     </p>
+                    {elan.link_url && (
+                      <a
+                        href={elan.link_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 text-sm sm:text-base leading-relaxed mt-2 block hover:underline hover:text-blue-700 text-right"
+                      >
+                        Ətraflı oxu →
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>

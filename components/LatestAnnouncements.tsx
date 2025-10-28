@@ -15,6 +15,7 @@ interface Announcement {
   date: string;
   category: string;
   description: string;
+  link_url?: string;
 }
 
 interface LatestAnnouncementsProps {
@@ -42,7 +43,7 @@ export default function LatestAnnouncements({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 sm:mb-12 lg:mb-16">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
-            Ən Son Elanlar
+            Ən Son Xəbərlər
           </h2>
           <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
             Təcrübə imkanları, karyera tədbirləri və əməkdaşlıq xəbərləri
@@ -109,6 +110,16 @@ export default function LatestAnnouncements({
                       {announcement.description}
                     </p>
                   </div>
+                  {announcement.link_url && (
+                    <a
+                      href={announcement.link_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 text-sm sm:text-base leading-relaxed mt-2 block hover:underline hover:text-blue-700 text-right"
+                    >
+                      Ətraflı oxu →
+                    </a>
+                  )}
                 </div>
               </SwiperSlide>
             );
@@ -120,7 +131,7 @@ export default function LatestAnnouncements({
             href="/elanlar"
             className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-sdu-blue to-blue-600 text-white rounded-lg sm:rounded-xl font-semibold hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sdu-blue shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-sm sm:text-base"
           >
-            Bütün Elanlara Bax
+            Bütün Xəbərlərə Bax
             <svg
               className="w-5 h-5 ml-2"
               fill="none"

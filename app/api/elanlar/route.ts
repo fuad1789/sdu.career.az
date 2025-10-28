@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 // Google Sheets configuration
 const SHEET_ID = process.env.GOOGLE_SHEETS_SHEET_ID!;
 const SHEET_NAME = "elanlar"; // Worksheet name
-const RANGE = "A:G"; // Columns A to G
+const RANGE = "A:Z"; // Include additional columns like link_url
 
 export async function GET(request: NextRequest) {
   try {
