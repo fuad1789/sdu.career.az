@@ -3,6 +3,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import { FaCalendarAlt } from "react-icons/fa";
+import { getBaseUrl } from "@/lib/get-base-url";
 
 interface NewsItem {
   id: string;
@@ -27,11 +28,18 @@ export const dynamic = "force-dynamic";
 
 async function getNews(): Promise<NewsItem[]> {
   try {
-    // Use environment variable or default to localhost for server-side rendering
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    // Get base URL using utility function
+    const baseUrl = getBaseUrl();
+    // If baseUrl is empty, use relative URL (works in Next.js server components)
+    const apiUrl = baseUrl
+      ? `${baseUrl}/api/xeberler?status=Aktiv`
+      : "/api/xeberler?status=Aktiv";
 
-    const response = await fetch(`${baseUrl}/api/xeberler?status=Aktiv`, {
+    const response = await fetch(apiUrl, {
       cache: "no-store", // Always fetch fresh data for dynamic pages
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
     if (!response.ok) {
