@@ -62,7 +62,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/elanlar"
+                  href="/xeberler"
                   className="text-gray-400 hover:text-white transition-colors text-sm block py-1"
                 >
                   Xəbərlər
