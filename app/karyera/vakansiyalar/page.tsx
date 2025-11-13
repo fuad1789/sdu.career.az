@@ -419,22 +419,22 @@ export default function VakansiyalarPage() {
                   key={job.id || index}
                   className="bg-gray-50 rounded-lg p-6 hover:shadow-lg transition-shadow"
                 >
-                  <div className="flex items-start justify-between mb-4">
+                  <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between mb-4">
                     <div className="flex-1">
                       <h3 className="text-2xl font-semibold text-gray-900 mb-2">
                         {job.title}
                       </h3>
-                      <div className="flex items-center text-gray-600 mb-2">
-                        <span className="mr-4">🏢 {job.company}</span>
-                        <span className="mr-4">📍 {job.location}</span>
-                        <span className="mr-4">⏰ {job.type}</span>
+                      <div className="flex flex-wrap items-center gap-3 text-gray-600 text-sm mb-2">
+                        <span>🏢 {job.company}</span>
+                        <span>📍 {job.location}</span>
+                        <span>⏰ {job.type}</span>
                       </div>
-                      <div className="flex items-center text-gray-600 mb-2">
-                        <span className="mr-4">💰 {job.salary}</span>
-                        <span className="mr-4">👨‍💼 {job.experience}</span>
+                      <div className="flex flex-wrap items-center gap-3 text-gray-600 text-sm">
+                        <span>💰 {job.salary}</span>
+                        <span>👨‍💼 {job.experience}</span>
                       </div>
                     </div>
-                    <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                    <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium self-start md:self-auto">
                       {job.status === "Aktiv" ? "Aktiv" : "Bağlı"}
                     </span>
                   </div>
@@ -486,18 +486,16 @@ export default function VakansiyalarPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm text-gray-600">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="text-sm text-gray-600 space-y-1 sm:space-y-0 sm:flex sm:flex-wrap sm:items-center sm:gap-4">
                       <span>
                         📅 Yerləşdirilib: {formatDate(job.postedDate)}
                       </span>
-                      <span className="ml-4">
-                        ⏰ Son tarix: {formatDate(job.deadline)}
-                      </span>
+                      <span>⏰ Son tarix: {formatDate(job.deadline)}</span>
                     </div>
                     <button
                       onClick={() => handleApply(job)}
-                      className="bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-teal-700 transition-colors"
+                      className="bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-teal-700 transition-colors w-full sm:w-auto"
                     >
                       Müraciət Et
                     </button>
