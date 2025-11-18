@@ -392,7 +392,7 @@ export default function MezunQeydiyyatiPage() {
                       onChange={handleInputChange}
                       required
                       min="1990"
-                      max="2024"
+                      max="2025"
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-500"
                     />
                   </div>
