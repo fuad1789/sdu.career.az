@@ -47,29 +47,21 @@ export default function VakansiyalarPage() {
   >([
     {
       id: "1",
-      title: "Data analitik - təcrübəçi",
-      company: "PASHA Life",
+      title: "(Education Technology and Consulting) təşkilatçılığı",
+      company: "EduHek",
       location: "Bakı, Azərbaycan",
       duration: "3-6 ay",
       description:
-        "PASA Life-da data analitik sahəsində təcrübə proqramı. Real layihələr üzərində işləmə imkanı, mentorluq dəstəyi və beynəlxalq təcrübə.",
-      requirements: [
-        "Bakalavr və ya Magistr tələbəsi",
-        "Data analitik bacarıqları (Python, R, SQL)",
-        "İngilis dili bilikləri (B2+ səviyyə)",
-        "Komanda işi bacarıqları",
-      ],
+        "EduHek-in (Education Technology and Consulting) təşkilatçılığı, Hədəf Kursları və Sumqayıt Dövlət Universitetinin birgə əməkdaşlığı çərçivəsində xüsusi təcrübə proqramı başlanır!   Təcrübə proqramı iyun ayına qədər davam edəcək.  Proqramı uğurla tamamlayan hər bir tələbə sertifikatla təltif olunacaq.",
+      requirements: ["III və IV kurs tələbələri"],
       benefits: [
-        "Rəqəmsal mükafat",
-        "Mentorluq dəstəyi",
-        "Karyera inkişaf imkanları",
-        "Şəbəkə qurma tədbirləri",
+        "Təcrübə proqramı iyun ayına qədər davam edəcək.",
+        "Proqramı uğurla tamamlayan hər bir tələbə sertifikatla təltif olunacaq.",
       ],
-      postedDate: "4 noyabr 2025",
-      deadline: "13 noyabr 2025",
+      postedDate: "20 noyabr 2025",
+      deadline: "30 noyabr 2025",
       status: "Aktiv",
-      applicationLink:
-        "https://www.tecrube.az/vacancies/data-analitik-tecrubeci",
+      applicationLink: "https://wa.me/+994775550121",
     },
     {
       id: "2",
