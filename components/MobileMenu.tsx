@@ -41,8 +41,8 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       ],
     },
     {
-      title: "Elanlar",
-      href: "/elanlar",
+      title: "Xeberler",
+      href: "/xeberler",
       subItems: [],
     },
     {
