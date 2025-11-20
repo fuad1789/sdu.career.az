@@ -32,8 +32,8 @@ export default function Navigation() {
       ],
     },
     {
-      title: "Elanlar",
-      href: "/elanlar",
+      title: "Xəbərlər",
+      href: "/xeberler",
       subItems: [],
     },
     {
