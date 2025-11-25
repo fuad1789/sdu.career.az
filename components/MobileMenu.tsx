@@ -108,14 +108,21 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               </Link>
             </div>
 
-            {/* Vakansiyalar Link */}
-            <div className="mb-4">
+            {/* Vakansiyalar və Təcrübə Proqramları Linkləri */}
+            <div className="mb-4 space-y-1">
               <Link
                 href="/karyera/vakansiyalar"
                 className="block py-2 text-gray-700 hover:text-sdu-blue font-medium"
                 onClick={onClose}
               >
                 Vakansiyalar
+              </Link>
+              <Link
+                href="/karyera/tecrube-proqramlari"
+                className="block py-2 text-gray-700 hover:text-sdu-blue font-medium"
+                onClick={onClose}
+              >
+                Təcrübə Proqramları
               </Link>
             </div>
 
