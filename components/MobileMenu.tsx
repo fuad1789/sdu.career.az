@@ -65,6 +65,11 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       subItems: [],
     },
     {
+      title: "Şəhid Məzunlar",
+      href: "/sehid-mezunlar",
+      subItems: [],
+    },
+    {
       title: "Bizimlə Əlaqə",
       href: "/elaqe",
       subItems: [],
