@@ -37,14 +37,18 @@ export default function Navigation() {
       subItems: [],
     },
     {
-      title: "Əsasnamə",
-      href: "/Əsasnamə_k_m.pdf",
-      subItems: [],
-    },
-    {
-      title: "Tələbənin Karyera Yol Xəritəsi",
-      href: "/SDU_KARYERA_XERITESI_CORRECT.pdf",
-      subItems: [],
+      title: "Resurslar",
+      href: "#",
+      subItems: [
+        {
+          title: "Əsasnamə",
+          href: "/Əsasnamə_k_m.pdf",
+        },
+        {
+          title: "Tələbənin Karyera Yol Xəritəsi",
+          href: "/SDU_KARYERA_XERITESI_CORRECT.pdf",
+        },
+      ],
     },
     {
       title: "Əməkdaşlar",
@@ -52,10 +56,15 @@ export default function Navigation() {
       subItems: [],
     },
     {
+     title: "Şəhid Məzunlar",
+     href: "/sehid-mezunlar",
+     subItems: [],
+   },
+    {
       title: "Bizimlə Əlaqə",
       href: "/elaqe",
       subItems: [],
-    },
+    }
   ];
 
   return (
