@@ -57,6 +57,11 @@ export default function PartnersSection() {
       logo: "/images/logo/iyde.svg",
       alt: "IYDE Logo",
     },
+     {
+      name: "IYDE Logo",
+      logo: "/images/logo/QARTAL-LOGO-241.png",
+      alt: "IYDE Logo",
+    },
   ];
 
   return (
