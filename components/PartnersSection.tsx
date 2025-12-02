@@ -58,7 +58,7 @@ export default function PartnersSection() {
       alt: "IYDE Logo",
     },
      {
-      name: "IYDE Logo",
+      name: "Qartal Logo",
       logo: "/images/logo/QARTAL-LOGO-241.png",
       alt: "IYDE Logo",
     },
