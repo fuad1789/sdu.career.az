@@ -46,14 +46,14 @@ export default function SehidMezunlarPage() {
             src="/images/SAB_0897.JPG"
             alt="Şəhidlər Abidəsi"
             fill
-            className="object-cover object-center"
+            className="object-cover  object-center absolute top-0 left-0"
             priority
           />
           <Image
             src="/images/78763.jpg"
-            alt="Şəhidlər Abidəsi"
+            alt="Bayraq"
             fill
-            className="object-cover opacity-30 object-center absolute top-0 left-0"
+            className="object-cover object-center opacity-40"
             priority
           />
         </div>
