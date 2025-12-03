@@ -39,9 +39,9 @@ export default function SehidMezunlarPage() {
       <Navigation />
 
       {/* Hero Section */}
-
-      <section className="w-full h-[60vh] relative">
-        <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+      <section className="w-full h-[70vh] relative overflow-hidden">
+        {/* Background Images */}
+        <div className="absolute inset-0">
           <Image
             src="/images/SAB_0897.JPG"
             alt="Şəhidlər Abidəsi"
@@ -53,15 +53,50 @@ export default function SehidMezunlarPage() {
             src="/images/78763.jpg"
             alt="Şəhidlər Abidəsi"
             fill
-            className="object-cover opacity-75 object-center absolute top-0 left-0"
+            className="object-cover opacity-30 object-center absolute top-0 left-0"
             priority
           />
         </div>
-        <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-          <h1 className="text-4xl md:text-6xl text-white font-bold tracking-wide uppercase drop-shadow-xl">
-            Şəhid Məzunlar
-          </h1>
+
+        {/* Gradient Overlay - Refined and balanced */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-red-900/10 via-transparent to-green-900/10" />
+
+        {/* Content */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center px-6 space-y-6 max-w-4xl">
+            {/* Decorative Top Line */}
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <div className="h-px w-16 bg-gradient-to-r from-transparent to-white/50" />
+              <div className="w-2 h-2 bg-white/70 rotate-45" />
+              <div className="h-px w-16 bg-gradient-to-l from-transparent to-white/50" />
+            </div>
+
+            {/* Main Title */}
+            <h1 className="text-5xl md:text-7xl text-white font-bold tracking-wider uppercase">
+              <span className="inline-block drop-shadow-2xl">
+                Şəhid Məzunlar
+              </span>
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-lg md:text-xl text-white/90 font-light tracking-wide max-w-2xl mx-auto drop-shadow-lg">
+              Vətənimizin azadlığı uğrunda canlarından keçən qəhrəmanlarımızın əziz xatirəsinə
+            </p>
+
+            {/* Decorative Bottom Line */}
+            <div className="flex items-center justify-center gap-4 mt-8">
+              <div className="h-px w-24 bg-gradient-to-r from-transparent to-white/40" />
+              <div className="w-1.5 h-1.5 bg-white/60 rounded-full" />
+              <div className="w-1.5 h-1.5 bg-white/60 rounded-full" />
+              <div className="w-1.5 h-1.5 bg-white/60 rounded-full" />
+              <div className="h-px w-24 bg-gradient-to-l from-transparent to-white/40" />
+            </div>
+          </div>
         </div>
+
+        {/* Bottom Fade - Very subtle */}
+        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white via-white/50 to-transparent" />
       </section>
 
       {/* Intro Text Section */}
