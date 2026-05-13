@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import EventBanner from "@/components/EventBanner";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import AnnouncementsSection from "@/components/AnnouncementsSection";
@@ -66,6 +67,7 @@ export default async function Home() {
       <Header />
       <Navigation />
       <Hero />
+      <EventBanner />
       <GraduateSearch />
       <AnnouncementsSection announcements={allAnnouncements} />
       <StatsSection />
