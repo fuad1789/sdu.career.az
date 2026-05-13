@@ -25,7 +25,7 @@ export default function EmekdaslarPage() {
         "Erasmus PETRA layihəsi – Tədqiqat bacarıqlarının inkişaf etdirilməsi",
       ],
       email: "anarahmedoglu@sdu.edu.az",
-      phone: "+994 (50) 566 88 88",
+      phone: "+994 (50) 566 38 88",
     },
   ];
 
