@@ -12,6 +12,7 @@ import {
   FaSignOutAlt,
   FaEnvelope,
   FaSuitcase,
+  FaNewspaper,
 } from "react-icons/fa";
 
 export default function AdminDashboard() {
@@ -371,6 +372,23 @@ export default function AdminDashboard() {
                   <p className="font-medium text-gray-900">Vakansiyalar</p>
                   <p className="text-sm text-gray-600">
                     Vakansiyaları idarə et
+                  </p>
+                </div>
+              </div>
+            </button>
+
+            <button
+              onClick={() => router.push("/admin/xeberler")}
+              className="bg-white rounded-lg shadow p-4 text-left hover:shadow-md transition duration-200"
+            >
+              <div className="flex items-center">
+                <div className="p-2 bg-pink-100 rounded-lg">
+                  <FaNewspaper className="w-5 h-5 text-pink-600" />
+                </div>
+                <div className="ml-3">
+                  <p className="font-medium text-gray-900">Xəbərlər</p>
+                  <p className="text-sm text-gray-600">
+                    Xəbərləri idarə et
                   </p>
                 </div>
               </div>
